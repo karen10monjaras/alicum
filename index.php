@@ -216,16 +216,9 @@ $(document).ready(function() {
             id_productos.splice(index, 1);
         }
 
-        calcularTotal(); // Llama a la función para recalcular el total
+        calcularTotal();
     });
 
-    // Manejador de eventos para cambiar la cantidad de productos
-    // $('#tbl-productos').on('change', 'input[type="number"]', function () {
-    //     // ... (tu código para cambiar la cantidad de productos)
-    //     calcularTotal(); // Llama a la función para recalcular el total
-    // });
-
-    // Función para calcular el total
     function calcularTotal() {
         var total = 0;
         $('#tbl-productos tr').each(function () {
@@ -234,11 +227,42 @@ $(document).ready(function() {
             var subtotal = cantidad * precio;
             total += subtotal;
         });
-		console.log(total)
 
-        // Actualiza el elemento donde deseas mostrar el total
-        $('#total-pagar').text(total.toFixed(2));
+		total = total.toFixed(2);
+        $('#total-pagar').text(total);
+		
+		return total;
     }
+
+	function enviarDatosAlServidor() {
+		var total  = calcularTotal();
+        var dataToSend = [];
+
+        $('#tbl-productos tr').each(function () {
+            var id = $(this).data('id');
+            var cantidad = parseInt($(this).find('input[type="number"]').val());
+            dataToSend.push({ id: id, cantidad: cantidad });
+        });
+
+		// Agrega el total al objeto JSON
+		dataToSend.push({ total: total });
+
+        // Enviar los datos al servidor como un objeto JSON
+        $.ajax({
+            type: "POST",
+            url: "modulos/inicio/model.php",
+            data: { productos: JSON.stringify(dataToSend) },
+            success: function (response) {
+                console.log(response)
+				$("#tbl-productos").html("");
+				$('#total-pagar').text("0.00");
+			}
+        });
+    }
+
+	$("#btn-sell").click(function() {
+		enviarDatosAlServidor();
+	});
 
   });
 </script>

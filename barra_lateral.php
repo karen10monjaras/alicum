@@ -1,10 +1,10 @@
 <div class="navbar-content">
 	<ul class="pc-navbar">
     	<li class="pc-item">
-			<a href="?modulo=inicio" class="pc-link "><span class="pc-micon"><i class="fa fas fa-home"></i></span><span class="pc-mtext">Inicio</span></a>
+			<a href="?modulo=inicio" class="pc-link "><span class="pc-micon"><i class="fa fas fa-dollar-sign"></i></span><span class="pc-mtext">Generar venta</span></a>
 		</li>
 		<li class="pc-item">
-			<a href="?modulo=ventas" class="pc-link "><span class="pc-micon"><i class="fa fas fa-dollar-sign"></i></span><span class="pc-mtext">Ventas</span></a>
+			<a href="?modulo=ventas" class="pc-link "><span class="pc-micon"><i class="fa fas fa-history"></i></span><span class="pc-mtext">Historial ventas</span></a>
 		</li>
 		<li class="pc-item">
 			<a href="?modulo=compras" class="pc-link "><span class="pc-micon"><i class="fa fas fa-shopping-bag"></i></span><span class="pc-mtext">Compras</span></a>

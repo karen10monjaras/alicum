@@ -52,8 +52,8 @@
                         </div>
                     </div>
                     <div class="container-fluid border d-flex">
-                        <div class="h3 m-4">TOTAL A PAGAR: $ <span id="total-pagar"></span></div>
-                        <button class="btn btn-sm btn-outline-success my-3">Realizar venta</button>
+                        <div class="h3 m-4">TOTAL A PAGAR: $ <span id="total-pagar">0.00</span></div>
+                        <button id="btn-sell" class="btn btn-sm btn-outline-success my-3">Realizar venta</button>
                     </div>
                 </div>
             </div>

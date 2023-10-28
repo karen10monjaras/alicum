@@ -8,7 +8,7 @@ if ($key == "") {
     return $html = "";
 }
 
-$query = "SELECT id_producto, nombre_producto, precio_producto FROM almacen WHERE nombre_producto LIKE  '%$key%'";
+$query = "SELECT id_producto, nombre_producto, precio_producto FROM almacen WHERE nombre_producto LIKE  '%$key%' AND stock > 0";
 $result = mysqli_query($conn, $query);
 
 if (mysqli_num_rows($result) > 0) {
