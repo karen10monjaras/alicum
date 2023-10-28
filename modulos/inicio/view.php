@@ -36,7 +36,7 @@
                     <div class="card-body table-border-style" style="max-height: 40vh !important; overflow-y: auto;">
                         <div class="table-responsive">
                             <table class="table table-striped table-sm">
-                                <thead>
+                                <thead id="tbl-header">
                                     <tr>
                                         <th>Código</th>
                                         <th>Producto</th>
@@ -62,3 +62,6 @@
         <!-- /.row -->
     </section>
     <!-- /.content -->
+
+    <!-- Funciones para el modulo ventas -->
+    <script src="assets/js/ventas.js"></script>
