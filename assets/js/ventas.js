@@ -1,9 +1,23 @@
 $(document).ready(function() {
     id_productos = [];
 
+    // Cargar lista de clientes en el select
+    $.ajax({
+        type: "POST",
+        url: "modulos/inicio/model.php",
+        data: { clientes: true },
+        success: function (response) {
+            $("#cliente").append(response);
+        },
+        error: function (response) {
+            console.log(response);
+        }
+    });
+
+    // Funcion que habilita el boton de venta cuando hay productos en la tabla 
     function habilitar_venta() {
         var existingRows = $('#tbl-productos tr');
-        if (existingRows.length > 0) {
+        if (existingRows.length > 0 && parseFloat($('#total-pagar').text()) > 0) {
             $("#tbl-header").removeAttr("hidden");
 	        $("#btn-sell").removeAttr("disabled");
             $("#btn-sell").fadeIn(500);
@@ -58,9 +72,7 @@ $(document).ready(function() {
             }
             id_productos.push(id);
 
-            habilitar_venta();
 			calcularTotal();
-            
             $('#suggestions').fadeOut(100);
             $("#key").val("");
             return false;
@@ -86,7 +98,6 @@ $(document).ready(function() {
             id_productos.splice(index, 1);
         }
 
-        habilitar_venta();
         calcularTotal();
     });
 
@@ -95,17 +106,18 @@ $(document).ready(function() {
         $('#tbl-productos tr').each(function () {
             var cantidad = parseInt($(this).find('input[type="number"]').val());
             var precio = parseFloat($(this).find('td:eq(2)').text().replace('$', ''));
+            if (isNaN(cantidad)) {
+                cantidad = 0;
+            }
+
             var subtotal = cantidad * precio;
             total += subtotal;
         });
 
 		total = total.toFixed(2);
-        if (total == "NaN") {
-            total = 0.00;
-        }
-
         $('#total-pagar').text(total);
-		
+        habilitar_venta();
+
 		return total;
     }
 
@@ -121,6 +133,7 @@ $(document).ready(function() {
 
 		// Agrega el total al objeto JSON
 		dataToSend.push({ total: total });
+		dataToSend.push({ cliente: $("#cliente").val() });
 
         // Enviar los datos al servidor como un objeto JSON
         $.ajax({

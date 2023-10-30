@@ -32,6 +32,10 @@
                             <input type="search" name="key" id="key" class="form-control" placeholder="Buscar por producto o código de barra" aria-label="Search" />
                         </div>
                         <div id="suggestions"></div>
+                        <div class="col-md-4 float-right">
+                            <select class="form-control mt-1" name="cliente" id="cliente">
+                            </select>
+                        </div>
                     </div>
                     <div class="card-body table-border-style" style="max-height: 40vh !important; overflow-y: auto;">
                         <div class="table-responsive">

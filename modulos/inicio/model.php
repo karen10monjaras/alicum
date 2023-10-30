@@ -2,15 +2,35 @@
 session_start();
 require_once "../database.php";
 
+if (isset($_POST['clientes'])){
+    $html = '';
+
+    $query = "SELECT id_cliente, nombre_cliente FROM clientes";
+    $result = mysqli_query($conn, $query);
+
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $id_cliente = $row['id_cliente'];              
+            $nombre_cliente = $row['nombre_cliente'];
+
+            $html .= "
+            <option value='$id_cliente'>$nombre_cliente</option>";
+        }
+    }
+
+    echo $html;
+    return;
+}
+
 // Recibe los datos JSON del frontend
 $data = json_decode($_POST['productos'], true);
 
 mysqli_begin_transaction($conn);
 
 try {
-    $id_cliente = 1;
+    $id_cliente = $data[count($data) - 1]['cliente'];
     $id_usuario = $_SESSION['id_usuario'];
-    $total_venta = $data[count($data) - 1]['total'];
+    $total_venta = $data[count($data) - 2]['total'];
 
     // Se hace el insert en la tabla transaccion
     $query_insert_transaction = "INSERT INTO transaccion_ventas(id_transaccion, id_cliente, id_usuario, total_venta) VALUES (NULL, $id_cliente, $id_usuario, $total_venta)";                
