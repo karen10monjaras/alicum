@@ -3,6 +3,7 @@ $modules = [
     "inicio" => "modulos/inicio/view.php",
     "ventas" => "modulos/ventas/view.php",
     "compras" => "modulos/compras/view.php",
+    "historial_compras" => "modulos/historial_compras/view.php",
     "almacen" => "modulos/almacen/view.php",
     "clientes" => "modulos/clientes/view.php",
     "proveedores" => "modulos/proveedores/view.php",
