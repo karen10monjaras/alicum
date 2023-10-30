@@ -29,7 +29,7 @@ if (isset($_POST['action'])) {
         
         $result_user_update = mysqli_query($conn, $query_user_update);  
 
-        if ($result_user_update) echo "Registro exitoso";
+        if ($result_user_update) echo "Actualización exitosa";
     }
 }
 
