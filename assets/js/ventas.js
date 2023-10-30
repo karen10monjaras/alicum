@@ -69,6 +69,10 @@ $(document).ready(function() {
       });
     });
 
+    // Actualizar total a pagar cuando se modifica la cantidad de producto
+    $("#tbl-productos").on("keyup", "input[type='number']", calcularTotal);
+    $("#tbl-productos").on("change", "input[type='number']", calcularTotal);
+
 	// Manejador de eventos para eliminar productos
     $('#tbl-productos').on('click', '.delete-product', function () {
         var id = $(this).data('id');
@@ -96,6 +100,10 @@ $(document).ready(function() {
         });
 
 		total = total.toFixed(2);
+        if (total == "NaN") {
+            total = 0.00;
+        }
+
         $('#total-pagar').text(total);
 		
 		return total;
