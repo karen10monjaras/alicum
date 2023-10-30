@@ -1,10 +1,10 @@
 <?php
 require_once "../database.php";
 
-$query_get_users = "SELECT id_usuario, rol_usuario, usuario, nombre_usuario, telefono_usuario, correo_usuario, creacion_cuenta, estado_usuario FROM usuarios";
-$data_users = mysqli_query($conn, $query_get_users);
+$query_get_productos = "SELECT * FROM almacen";
+$productos_data = mysqli_query($conn, $query_get_productos);
 
-$data = mysqli_fetch_all($data_users, MYSQLI_ASSOC);
+$data = mysqli_fetch_all($productos_data, MYSQLI_ASSOC);
 
 echo json_encode($data, JSON_UNESCAPED_UNICODE);
 

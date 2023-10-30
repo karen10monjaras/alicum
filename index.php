@@ -52,7 +52,7 @@ if (!isset($_SESSION['id_usuario'])) {
 	<script src="assets/js/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 	<!-- Toast (SweetAlert2) -->
 	<script src="assets/js/plugins/sweetalert2/sweetalert2.min.js"></script>
-
+	<!-- Bootstrap CSS -->
 	<script src="assets/js/plugins/bootstrap.min.js"></script>
 
 </head>
