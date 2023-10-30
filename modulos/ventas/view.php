@@ -37,14 +37,11 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLiveLabel">Detalles de venta</h5>
+						<h5 class="modal-title" id="exampleModalLiveLabel">Detalles de venta con número de nota: <span class="text-right" id="nota_venta"></span></h5>
 						<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body row">
-						<div class="col-md-6">
-              <span>Nota venta</span>
-              <p id="nota_venta"></p>
-            </div>
+						
             <div class="col-md-6">
               <span>Fecha venta</span>
               <p id="fecha_venta"></p>
@@ -61,9 +58,9 @@
               <span>Total venta ($)</span>
               <p id="total_venta"></p>
             </div>
-            <div class='col-md-6'>
+            <div class='col-md-12'>
               <span>Productos</span>
-              <ul id="lista-productos" style="list-style: none; padding: 0;"></ul>
+              <ul id="lista-productos" style="list-style: none; padding: 0; margin: 0;"></ul>
             </div>
 					</div>
 				</div>
@@ -122,8 +119,7 @@
               </button>
               <button id='${data}' class='btn btn-sm btn-danger btn-delete'>
                 <i class='fas fa-trash'></i>
-              </button>
-              `;
+              </button>`;
             }
             return template;
           }
@@ -173,7 +169,7 @@
           var listaProductos = $('#lista-productos');
               
           $.each(productosData, function(index, producto) {
-            var li = $('<li class="d-inline-flex m-1" style="list-style: none !important;"><span class="bg-info p-2 rounded">' + producto.cantidad_producto + " - " + producto.nombre_producto + '</span></li>');
+            var li = $('<li class="d-inline-flesx" style="list-style: none !important; margin: 2px 2px 0 0;"><span class="p-1 rounded">' + producto.cantidad_producto + " - " + producto.nombre_producto + '</span></li>');
             listaProductos.append(li);
           });
         }
