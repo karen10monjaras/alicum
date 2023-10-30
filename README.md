@@ -1,6 +1,30 @@
 # IMPORTANTE
 
+
+## Para acceder al sistema usar las credenciales (inicio de sesión) 
+> usuario: admin  
+> password: admin
+
+---
+
+# Modificaciones a la Base de Datos
+
+Se realizaron modificaciones sobre las siguientes tablas:
+
+- usuarios
+- transaccion_venta
+- almacen
+
+---
+
 ## Guía básica para trabajar con GIT
+
+### NOTA:
+Usar el siguiente comando para descargar la versión más reciente del proyecto   
+`git pull`  
+> **IMPORTANTE:** Si tienes avances en local es recomendable hacer un respaldo antes de ejecutar el comando anterior, ya que las diferentes versiones ocasionan "_conflictos_" que se tienen que solucionar de forma manual.
+
+---
 
 > Paso 1: Entrar a la carpeta donde se encuentra el proyecto donde vamos a utilizar GIT y abrir la terminal GIT BASH.
 
@@ -48,10 +72,6 @@ Este comando se usa para descargar una copia exacta del repositorio descrito en 
 > Sientete libre de modificar los archivos que quieras, GIT nos permite "**_viajar en el tiempo_**" para consultar todas las versiones disponibles y ver el código que estaba escrito en dicha versión. En caso de que el proyecto presente errores se puede regresar a una versión donde no existía dichos errores.
 
 ---
-
-## Para acceder al sistema usar las contraseñas 
-> usuario: admin  
-> password: admin
 
 # PROYECTO DE RESIDENCIA PROFESIONAL _**PUNTO DE VENTA ALICUM**_
 
