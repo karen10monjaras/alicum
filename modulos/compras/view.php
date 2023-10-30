@@ -27,11 +27,15 @@
           <div class="col-xl-12">
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="text-center">Venta</h2>
+                        <h2 class="text-center">Compra de insumos</h2>
                         <div class="form-outline">
                             <input type="search" name="key" id="key" class="form-control" placeholder="Buscar por producto o código de barra" aria-label="Search" />
                         </div>
                         <div id="suggestions"></div>
+                        <div class="col-md-4 float-right">
+                            <select class="form-control mt-1" name="proveedor" id="proveedor">
+                            </select>
+                        </div>
                     </div>
                     <div class="card-body table-border-style" style="max-height: 40vh !important; overflow-y: auto;">
                         <div class="table-responsive">
@@ -41,7 +45,7 @@
                                         <th>Código</th>
                                         <th>Producto</th>
                                         <th>Precio Unidad</th>
-                                        <th>Cantidad</th>
+                                        <th>Cantidad compra</th>
                                         <th>Remover</th>
                                     </tr>
                                 </thead>
@@ -53,7 +57,7 @@
                     </div>
                     <div class="container-fluid border d-flex">
                         <div class="h3 m-4">TOTAL A PAGAR: $ <span id="total-pagar">0.00</span></div>
-                        <button id="btn-sell" class="btn btn-sm btn-outline-success my-3">Realizar venta</button>
+                        <button id="btn-buy" class="btn btn-sm btn-outline-info my-3">Confirmar compra</button>
                     </div>
                 </div>
             </div>
@@ -64,4 +68,4 @@
     <!-- /.content -->
 
     <!-- Funciones para el modulo ventas -->
-    <script src="assets/js/ventas.js"></script>
+    <script src="assets/js/compras.js"></script>
