@@ -1,9 +1,23 @@
+# **SISTEMA "_TERMINADO_"**
+
+> Cuando tengas tiempo puedes descargar el proyecto y probarlo, cualquier duda estaré al pendiente.
+>
+> Si encuentras algún error en el sistema por favor hazmelo saber para corregirlo. 
+>
+> Igual y si quieres que cambie algo o agregue otra funcionalidad no dudes en decirme.
+
+---
+
 # IMPORTANTE
 
+## Para acceder al sistema usar las credenciales (inicio de sesión)
 
-## Para acceder al sistema usar las credenciales (inicio de sesión) 
-> usuario: admin  
-> password: admin
+> | Campo       | Credenciales |
+> |-------------|--------------|
+> | Usuario:    | admin        |
+> | Contraseña: | admin        |
+
+Estos son los datos de acceso por defecto, puedes agregar nuevos usuarios administradores como gustes una vez estando dentro del sistema.
 
 ---
 
@@ -14,17 +28,28 @@ Se realizaron modificaciones sobre las siguientes tablas:
 - usuarios
 - transaccion_venta
 - almacen
+- ventas
+- compras
+
+Para poder usar el sistema es necesario que importes en tu phpmyadmin una de las bases de datos que deje en la carpeta "_databases_", igual ahi deje una nota.
 
 ---
-
-## Guía básica para trabajar con GIT
 
 ### NOTA:
 Usar el siguiente comando para descargar la versión más reciente del proyecto   
 `git pull`  
 > **IMPORTANTE:** Si tienes avances en local es recomendable hacer un respaldo antes de ejecutar el comando anterior, ya que las diferentes versiones ocasionan "_conflictos_" que se tienen que solucionar de forma manual.
 
+
+Igual dejo el enlace de descarga directo por si no quieres usar comandos.
+
+>  [Click aquí](https://github.com/karen10monjaras/alicum/archive/refs/heads/main.zip "Alicum")
+
+Igual aquí abajo te dejo la guía básica para trabajar con GIT por si en algún futuro quieres usarlo 🔽. 
+
 ---
+
+## Guía básica para trabajar con GIT
 
 > Paso 1: Entrar a la carpeta donde se encuentra el proyecto donde vamos a utilizar GIT y abrir la terminal GIT BASH.
 
