@@ -5,7 +5,7 @@ require_once "../database.php";
 if (isset($_POST['transaction_id'])) {
     $id_transaccion = $_POST['transaction_id'];
     
-    $query_transaction_data = "SELECT t.id_transaccion, DATE_FORMAT(t.fecha_compra, '%a. %d de %b. de %Y a las %r') AS fecha_compra, p.nombre_proveedor, u.nombre_usuario, t.total_compra FROM transaccion_compras t INNER JOIN compras c ON t.id_transaccion = c.id_transaccion INNER JOIN proveedores p ON t.id_proveedor = p.id_proveedor INNER JOIN usuarios u ON t.id_usuario = u.id_usuario WHERE t.id_transaccion = $id_transaccion";
+    $query_transaction_data = "SELECT t.id_transaccion, DATE_FORMAT(t.fecha_compra, '%a. %d de %b. de %Y a las %r') AS fecha_compra, p.nombre_proveedor, u.nombre_usuario, t.total_compra, t.descripcion_compra FROM transaccion_compras t INNER JOIN compras c ON t.id_transaccion = c.id_transaccion INNER JOIN proveedores p ON t.id_proveedor = p.id_proveedor INNER JOIN usuarios u ON t.id_usuario = u.id_usuario WHERE t.id_transaccion = $id_transaccion";
     $transaction_data = mysqli_query($conn, $query_transaction_data);
     $row = mysqli_fetch_all($transaction_data, MYSQLI_ASSOC);
 

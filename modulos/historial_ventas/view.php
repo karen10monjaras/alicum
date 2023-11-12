@@ -8,11 +8,11 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>N. transacción</th>
-                    <th>Fecha Venta</th>
+                    <th>Nota de venta</th>
+                    <th>Fecha de venta</th>
                     <th>Cliente</th>
-                    <th>Responsable</th>
-                    <th>Total venta($)</th>
+                    <th>Atendió</th>
+                    <th>Total ($)</th>
                     <th>Opciones</th>
                   </tr>
                   </thead>
@@ -57,6 +57,10 @@
             <div class="col-md-6">
               <span>Importe total de venta ($)</span>
               <p id="total_venta"></p>
+            </div>
+            <div class="col-md-6">
+              <span>Descripción</span>
+              <p id="descripcion_venta"></p>
             </div>
             <div class='col-md-12'>
               <span>Productos vendidos</span>

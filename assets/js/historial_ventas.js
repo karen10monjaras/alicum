@@ -94,6 +94,7 @@ success: function(response) {
   $("#nombre_cliente").text(data.transaccion_data[0].nombre_cliente);
   $("#responsable").text(data.transaccion_data[0].nombre_usuario);
   $("#total_venta").text(data.transaccion_data[0].total_venta);
+  $("#descripcion_venta").text(data.transaccion_data[0].descripcion_venta);
       
   var productosData = data.productos_data;
   var listaProductos = $('#lista-productos');
