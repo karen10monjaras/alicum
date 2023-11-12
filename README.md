@@ -1,13 +1,12 @@
-# **SISTEMA "_TERMINADO_"**
+# **IMPORTANTE**
 
 ** Actualizacion 12/11/2023 **
 
-1. Falta añadir el campo para descripcion al momento de realizar una venta (si quieren poner de descripción pago a credito o de contado) y que se muestre el cambio a devolver
+1. Falta añadir formulario antes de registrar una compra de insumos (si quieren poner de descripción por ejemplo pagó a crédito o de contado)
 
-A más tardar a las 10:00 AM ya estara listo el proyecto, para que lo descargues con el comando
-> **git pull**
+La base de datos ya se encuentra en la carpeta database :)
 
-Y no tengas que importar varias veces la BD por los cambios :)
+Cualquier duda ya sabes 😉
 
 ---
 

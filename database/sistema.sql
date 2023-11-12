@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-11-2023 a las 16:05:03
+-- Tiempo de generación: 12-11-2023 a las 16:32:08
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.3.13
 
@@ -145,7 +145,7 @@ INSERT INTO `transaccion_compras` (`id_transaccion`, `fecha_compra`, `id_proveed
 (8, '2023-11-12 06:29:03', 1, 1, 420, ''),
 (9, '2023-11-12 11:25:40', 1, 1, 480, ''),
 (10, '2023-11-12 12:40:24', 1, 1, 6900, ''),
-(11, '2023-11-12 15:00:27', 1, 1, 10200, '');
+(11, '2023-11-12 15:27:43', 1, 1, 10200, 'Pagado en efectivo');
 
 -- --------------------------------------------------------
 
