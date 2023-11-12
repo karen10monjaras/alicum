@@ -19,7 +19,7 @@ if ($rows > 0) {
 	$_SESSION['nombre'] = $row['nombre'];
 	$_SESSION['nombre_usuario'] = $row['nombre_usuario'];
 		
-	header("Location: index.php?modulo=inicio");
+	header("Location: index.php?modulo=ventas");
 } else {
 	$_SESSION['err'] = ["err_msg" => $err_msg];
 	header("Location: login.php");

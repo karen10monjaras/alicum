@@ -1,7 +1,7 @@
 <?php
 $modules = [
-    "inicio" => "modulos/inicio/view.php",
     "ventas" => "modulos/ventas/view.php",
+    "historial_ventas" => "modulos/historial_ventas/view.php",
     "compras" => "modulos/compras/view.php",
     "historial_compras" => "modulos/historial_compras/view.php",
     "almacen" => "modulos/almacen/view.php",

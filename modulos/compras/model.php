@@ -40,10 +40,12 @@ try {
     // Se obtiene el id de la ultima transaccion
     $id_transaccion = mysqli_insert_id($conn);
 
+    $limite = count($data) - 2; // Cantidad de productos menos los datos de proveedor y total
+
     // Itera sobre los datos y actualiza la base de datos
-    foreach ($data as $item) {
-        $id = $item['id'];
-        $cantidad = $item['cantidad'];
+    for ($i = 0; $i < $limite; $i++) {
+        $id = $data[$i]['id'];
+        $cantidad = $data[$i]['cantidad'];
 
         // Realiza la consulta SQL para actualizar la cantidad vendida en la tabla correspondiente
         $query_update_stock = "UPDATE almacen SET stock = stock + $cantidad WHERE id_producto = $id";

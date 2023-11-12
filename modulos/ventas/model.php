@@ -2,32 +2,66 @@
 session_start();
 require_once "../database.php";
 
-if (isset($_POST['transaction_id'])) {
-    $id_transaccion = $_POST['transaction_id'];
-    
-    $query_transaction_data = "SELECT t.id_transaccion, t.fecha_venta, c.nombre_cliente, u.nombre_usuario, t.total_venta FROM transaccion_ventas t INNER JOIN ventas v ON t.id_transaccion = v.id_transaccion INNER JOIN clientes c ON t.id_cliente = c.id_cliente INNER JOIN usuarios u ON t.id_usuario = u.id_usuario WHERE t.id_transaccion = $id_transaccion";
-    $transaction_data = mysqli_query($conn, $query_transaction_data);
-    $row = mysqli_fetch_all($transaction_data, MYSQLI_ASSOC);
+if (isset($_POST['clientes'])){
+    $html = '';
 
-    $query_products_data = "SELECT a.nombre_producto, v.cantidad_producto FROM ventas v INNER JOIN almacen a ON v.id_producto = a.id_producto WHERE id_transaccion = $id_transaccion ORDER BY a.nombre_producto ASC";
-    $products_data = mysqli_query($conn, $query_products_data);
-    $row_products = mysqli_fetch_all($products_data, MYSQLI_ASSOC);
-    
-    // Combinar los resultados en un solo arreglo
-    $result = array("transaccion_data" => $row, "productos_data" => $row_products);
+    $query = "SELECT id_cliente, nombre_cliente FROM clientes";
+    $result = mysqli_query($conn, $query);
 
-    // Codificar como JSON
-    echo json_encode($result, JSON_UNESCAPED_UNICODE);
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $id_cliente = $row['id_cliente'];              
+            $nombre_cliente = $row['nombre_cliente'];
+
+            $html .= "
+            <option value='$id_cliente'>$nombre_cliente</option>";
+        }
+    }
+
+    echo $html;
+    return;
 }
 
-if (isset($_POST['delete_id'])) {
-    $transaccion_id = $_POST['delete_id'];
-    
-    $query_transaction_delete = "DELETE FROM transaccion_ventas WHERE id_transaccion = $transaccion_id";
-    $result_transaction_delete = mysqli_query($conn, $query_transaction_delete);    
-        
-    if ($result_transaction_delete) echo "Registro eliminado con exito";
-}
+// Recibe los datos JSON del frontend
+$data = json_decode($_POST['productos'], true);
 
-mysqli_close($conn);
-?>
+mysqli_begin_transaction($conn);
+
+try {
+    $id_cliente = $data[count($data) - 1]['cliente'];
+    $id_usuario = $_SESSION['id_usuario'];
+    $total_venta = $data[count($data) - 2]['total'];
+
+    // Se hace el insert en la tabla transaccion
+    $query_insert_transaction = "INSERT INTO transaccion_ventas(id_transaccion, id_cliente, id_usuario, total_venta) VALUES (NULL, $id_cliente, $id_usuario, $total_venta)";                
+    $result_insert_transaction = mysqli_query($conn, $query_insert_transaction);
+
+    // Se obtiene el id de la ultima transaccion
+    $id_transaccion = mysqli_insert_id($conn);
+
+    $limite = count($data) - 2; // Cantidad de productos menos los datos de proveedor y total
+    
+    // Itera sobre los datos y actualiza la base de datos
+    for ($i = 0; $i < $limite; $i++) {
+        $id = $data[$i]['id'];
+        $cantidad = $data[$i]['cantidad'];
+
+        // Realiza la consulta SQL para actualizar la cantidad vendida en la tabla correspondiente
+        $query_update_stock = "UPDATE almacen SET stock = stock - $cantidad WHERE id_producto = $id";
+        $result_update_stock = mysqli_query($conn, $query_update_stock);
+
+        $query_insert_product = "INSERT INTO ventas(id_venta, id_transaccion, id_producto, cantidad_producto) VALUES (NULL, $id_transaccion, $id, $cantidad)";
+        $result_insert_product = mysqli_query($conn, $query_insert_product);        
+    }
+
+    // Verifica si las inserciones fueron exitosas
+    if ($result_insert_product) echo "Transaccion exitosa!";
+
+    // Confirmar transacción
+    mysqli_commit($conn);
+    
+} catch (Exception $e) {
+    // Ocurrió un error, realizar rollback
+    mysqli_rollback($conn);
+    echo "Error: " . $e->getMessage();
+}

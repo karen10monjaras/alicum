@@ -4,7 +4,7 @@ $(document).ready(function() {
     // Cargar lista de clientes en el select
     $.ajax({
         type: "POST",
-        url: "modulos/inicio/model.php",
+        url: "modulos/ventas/model.php",
         data: { clientes: true },
         success: function (response) {
             $("#cliente").append(response);
@@ -37,7 +37,7 @@ $(document).ready(function() {
   
       $.ajax({
         type: "POST",
-        url: "modulos/inicio/search.php",
+        url: "modulos/ventas/search.php",
         data: dataString,
         success: function(response) {
           $('#suggestions').fadeIn(100).html(response);
@@ -138,7 +138,7 @@ $(document).ready(function() {
         // Enviar los datos al servidor como un objeto JSON
         $.ajax({
             type: "POST",
-            url: "modulos/inicio/model.php",
+            url: "modulos/ventas/model.php",
             data: { productos: JSON.stringify(dataToSend) },
             success: function (response) {
                 Swal.fire({

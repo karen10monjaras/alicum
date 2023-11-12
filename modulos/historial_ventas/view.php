@@ -9,10 +9,10 @@
                   <thead>
                   <tr>
                     <th>N. transacción</th>
-                    <th>Fecha Compra</th>
-                    <th>Proveedor</th>
+                    <th>Fecha Venta</th>
+                    <th>Cliente</th>
                     <th>Responsable</th>
-                    <th>Total compra($)</th>
+                    <th>Total venta($)</th>
                     <th>Opciones</th>
                   </tr>
                   </thead>
@@ -37,28 +37,29 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLiveLabel">Detalles de compra con número de nota: <span class="text-right" id="nota_compra"></span></h5>
+						<h5 class="modal-title" id="exampleModalLiveLabel">Detalles de venta con número de nota: <span class="text-right" id="nota_venta"></span></h5>
 						<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body row">
+						
             <div class="col-md-6">
-              <span>Fecha compra</span>
-              <p id="fecha_compra"></p>
+              <span>Fecha venta</span>
+              <p id="fecha_venta"></p>
             </div>
             <div class="col-md-6">
-              <span>Proveedor</span>
-              <p id="nombre_proveedor"></p>
+              <span>Cliente</span>
+              <p id="nombre_cliente"></p>
             </div>
             <div class="col-md-6">
               <span>Responsable</span>
               <p id="responsable"></p>
             </div>
             <div class="col-md-6">
-              <span>Total compra ($)</span>
-              <p id="total_compra"></p>
+              <span>Total venta ($)</span>
+              <p id="total_venta"></p>
             </div>
             <div class='col-md-12'>
-              <span>Insumos</span>
+              <span>Productos</span>
               <ul id="lista-productos" style="list-style: none; padding: 0; margin: 0;"></ul>
             </div>
 					</div>
@@ -66,4 +67,4 @@
 			</div>
 		</div>
 
-    <script src="assets/js/historial_compras.js"></script>
+    <script src="assets/js/historial_ventas.js"></script>

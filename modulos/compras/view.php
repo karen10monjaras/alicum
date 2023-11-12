@@ -67,5 +67,4 @@
     </section>
     <!-- /.content -->
 
-    <!-- Funciones para el modulo ventas -->
     <script src="assets/js/compras.js"></script>

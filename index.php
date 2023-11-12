@@ -55,6 +55,27 @@ if (!isset($_SESSION['id_usuario'])) {
 	<!-- Bootstrap CSS -->
 	<script src="assets/js/plugins/bootstrap.min.js"></script>
 
+	<style>
+		#suggestions {
+		box-shadow: 2px 2px 8px 0 rgba(0,0,0,.2);
+		height: auto;
+		position: absolute;
+		top: 110px;
+		z-index: 9999;
+		width: auto;
+		max-height: 250px;
+		overflow-y: auto;
+		}
+		
+		#suggestions .suggest-element {
+		background-color: #EEEEEE;
+		border-top: 1px solid #d6d4d4;
+		cursor: pointer;
+		padding: 8px;
+		width: 100%;
+		float: left;
+		}
+	</style>
 </head>
 
 <body class="">
