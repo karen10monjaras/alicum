@@ -22,7 +22,8 @@
                                     <tr>
                                         <th>Código</th>
                                         <th>Producto</th>
-                                        <th>Precio Unidad</th>
+                                        <th>Precio C/Unidad</th>
+                                        <th>En almácen</th>
                                         <th>Cantidad</th>
                                         <th>Remover</th>
                                     </tr>

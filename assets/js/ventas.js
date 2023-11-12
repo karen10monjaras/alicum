@@ -49,6 +49,7 @@ $(document).ready(function() {
           $('.suggest-element').on('click', function(){
             var id = $(this).attr('id');
             var precio = $(this).attr('precio');
+            var existencias = $(this).attr('stock');
             var producto = $(this).text();
   
 			var existingRow = $('#tbl-productos tr[data-id="' + id + '"]');
@@ -62,6 +63,7 @@ $(document).ready(function() {
                     <td>8923716472</td>
                     <td>${producto}</td>
                     <td>$ ${precio}</td>
+                    <td old_stock='${existencias}'>${existencias}</td>
                     <td>
                         <div class="form-outline">
                             <input type="number" class="form-control" value="1"/>
@@ -111,12 +113,25 @@ $(document).ready(function() {
         $('#tbl-productos tr').each(function () {
             var cantidad = parseInt($(this).find('input[type="number"]').val());
             var precio = parseFloat($(this).find('td:eq(2)').text().replace('$', ''));
-            if (isNaN(cantidad)) {
-                cantidad = 0;
-            }
-
+            var stockCell = $(this).find('td:eq(3)');
+            var old_stock = parseInt(stockCell.attr("old_stock"));
+            var stock = parseInt(stockCell.text());
+        
+            if (isNaN(cantidad)) cantidad = 0;
+        
             var subtotal = cantidad * precio;
             total += subtotal;
+        
+            // Asegurarse de que el stock original esté guardado en la primera iteración
+            if (isNaN(old_stock)) {
+                stockCell.attr("old_stock", stock);
+                old_stock = stock;
+            }
+        
+            var nuevo_stock = old_stock - cantidad;
+        
+            // Actualizar el stock visualmente en la tabla
+            stockCell.text(nuevo_stock);
         });
 
 		total = total.toFixed(2);
@@ -125,6 +140,17 @@ $(document).ready(function() {
 
 		return total;
     }
+
+    $('#tbl-productos tr').on('change', 'input[type="number"]', function () {
+        var cantidad = parseInt($(this).val());
+        var stockCell = $(this).closest('tr').find('td:eq(3)');
+        var old_stock = parseInt(stockCell.attr("old_stock"));
+    
+        if (!isNaN(old_stock)) {
+            // Restaurar el stock original visualmente si la cantidad se reduce
+            stockCell.text(old_stock - cantidad);
+        }
+    });
 
 	$("#btn-sell").click(function() {
 		var total  = calcularTotal();

@@ -15,7 +15,7 @@ if (!isset($_SESSION['id_usuario'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <!-- Favicon icon -->
-    <link rel="icon" href="assets/images/favicon.svg" type="image/x-icon">
+    <!-- <link rel="icon" href="assets/images/favicon.svg" type="image/x-icon"> -->
     <!-- font css -->
     <link rel="stylesheet" href="assets/fonts/feather.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome.css">
@@ -90,7 +90,7 @@ if (!isset($_SESSION['id_usuario'])) {
 	<!-- [ Mobile header ] start -->
 	<div class="pc-mob-header pc-header">
 		<div class="pcm-logo">
-			<img src="assets/images/logo.svg" alt="" class="logo logo-lg">
+			<img src="assets/images/logoAlicum.jpg" alt="" class="logo logo-lg">
 		</div>
 		<div class="pcm-toolbar">
 			<a href="#!" class="pc-head-link" id="mobile-collapse">
