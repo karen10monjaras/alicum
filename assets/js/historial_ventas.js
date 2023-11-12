@@ -78,7 +78,7 @@ $(document).ready(function() {
 // Mostrar transaccion
 $(document).on('click', '.btn-view', function() {
 var transaction_id = $(this).attr("id");
-$('#lista-productos').html("");
+$('#lista_productos').html("");
 
 $.ajax({
 url: "modulos/historial_ventas/model.php",
@@ -97,20 +97,35 @@ success: function(response) {
   $("#descripcion_venta").text(data.transaccion_data[0].descripcion_venta);
       
   var productosData = data.productos_data;
-  var listaProductos = $('#lista-productos');
+  var listaProductos = $('#lista_productos');
       
   $.each(productosData, function(index, producto) {
     var nombre_producto = producto.nombre_producto;
     var cantidad_producto = producto.cantidad_producto;
     var precio_venta = producto.precio_venta;
     var total_venta = cantidad_producto * precio_venta;
+    var tbody = ``;
 
-    var li = `
-    <li>
-      ${nombre_producto} x ${cantidad_producto} unidades a $ ${precio_venta} = $ ${total_venta}
-    </li>`;
-    listaProductos.append(li);
+    tbody += `
+    <tr>
+      <td>${nombre_producto}</td>
+      <td class="text-right">${cantidad_producto}</td>
+      <td class="text-right">${precio_venta}</td>
+      <td class="text-right">${total_venta}</td>
+    </tr>`;
+
+    listaProductos.append(tbody);
   });
+  // Añadir el total de la compra
+  tbody = `
+  <tr>
+    <td></td>
+    <td></td>
+    <td class="text-right"><b>Total</b></td>
+    <td class="text-right"><b>$ ${data.transaccion_data[0].total_venta}</b></td>
+  </tr>`;
+
+  listaProductos.append(tbody);
 }
 });
 });
@@ -140,7 +155,7 @@ if (result.isConfirmed) {
         icon: "success",
         title: response,
         showConfirmButton: false,
-        timer: 2000
+        timer: 600
       });
     },
     complete: function() {

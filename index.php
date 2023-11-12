@@ -117,9 +117,10 @@ if (!isset($_SESSION['id_usuario'])) {
 				<a href="#" class="b-brand">
 					<!-- ========   change your logo hear   ============ -->
 					<!-- <img src="assets/images/logo.svg" alt="" class="logo logo-lg"> -->
-					<!-- <img src="assets/images/logo-sm.svg" alt="" class="logo logo-sm"> -->
+					<img src="assets/images/logoAlicum.jpg" alt="" class="logo logo-sm">
                     <a href="#" class="brand-link">
-                        <!-- <img src="assets/images/logo.svg" alt="Alicum Logo" class="brand-image img-circle elevation-3" style="opacity: .8"> -->
+						<!-- <img src="assets/images/logoAlicum.jpg" alt="" class="logo logo-sm"> -->
+                        <!-- <img src="assets/images/logoAlicum.jpg" alt="Alicum Logo" class="logo logo-lg"> -->
                         <span class="brand-text font-weight-light h4 text-white">ALICUM</span>
                     </a>
 				</a>

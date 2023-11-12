@@ -54,16 +54,23 @@
               <p id="responsable"></p>
             </div>
             <div class="col-md-6">
-              <span>Importe total de compra ($)</span>
-              <p id="total_compra"></p>
-            </div>
-            <div class="col-md-6">
               <span>Descripción</span>
               <p id="descripcion_compra"></p>
             </div>
             <div class='col-md-12'>
-              <span>Insumos comprados</span>
-              <ul id="lista-productos" style="list-style: none; padding: 0; margin: 0;"></ul>
+              <table class="table table-sm table-bordered border">
+                <thead>
+                  <tr>
+                    <th>Producto</th>
+                    <th>Cant.</th>
+                    <th>Precio U.</th>
+                    <th>Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody id="lista_productos">
+                  <!-- Se rellena dinámicamente -->
+                </tbody>
+              </table>
             </div>
 					</div>
 				</div>

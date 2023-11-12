@@ -1,26 +1,4 @@
-<style>
-    #suggestions {
-      box-shadow: 2px 2px 8px 0 rgba(0,0,0,.2);
-      height: auto;
-      position: absolute;
-      top: 110px;
-      z-index: 9999;
-      width: auto;
-      max-height: 250px;
-      overflow-y: auto;
-    }
-    
-    #suggestions .suggest-element {
-      background-color: #EEEEEE;
-      border-top: 1px solid #d6d4d4;
-      cursor: pointer;
-      padding: 8px;
-      width: 100%;
-      float: left;
-    }
-</style>
-
-<!-- Main content -->
+    <!-- Main content -->
     <section class="content">
         <div class="row">
           <!-- [ stiped-table ] start -->
@@ -29,11 +7,13 @@
                     <div class="card-header">
                         <h2 class="text-center">Compra de insumos</h2>
                         <div class="form-outline">
-                            <input type="search" name="key" id="key" class="form-control" placeholder="Buscar por producto o código de barra" aria-label="Search" />
+                            <input type="search" name="key" id="key" class="form-control" placeholder="Buscar por producto por nombre" aria-label="Search" />
                         </div>
                         <div id="suggestions"></div>
-                        <div class="col-md-4 float-right">
+                        <div class="col-md-4 float-right d-flex align-items-center">
+                            <label for="proveedor" class="mt-1 mr-1 h5">Proveedor</label>
                             <select class="form-control mt-1" name="proveedor" id="proveedor">
+                                <!-- Se rellena dinámicamente -->
                             </select>
                         </div>
                     </div>

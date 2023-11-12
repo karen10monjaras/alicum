@@ -161,7 +161,7 @@ $(document).ready(function() {
               icon: "success",
               title: response,
               showConfirmButton: false,
-              timer: 2000
+              timer: 600
             });
           },
           complete: function() {

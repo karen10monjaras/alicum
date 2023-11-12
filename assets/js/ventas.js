@@ -162,6 +162,20 @@ $(document).ready(function() {
         $('#cambio').val("$ " + cambio.toFixed(2));
     });
 
+     // Funcion para limpiar el formulario
+     function resetForm() {
+        $("#descripcion_venta").val("");
+        $("#pago").val("");
+        $("#cambio").val("");
+        $("#key").val("");
+        $("#tbl-productos").empty();
+        $("#total-pagar").text("0.00");
+        $("#tbl-header").attr("hidden", true);
+        $("#btn-sell").attr("disabled", true);
+        $("#btn-sell").fadeOut(500);
+        id_productos = [];
+    }
+    
     // Enviar los datos al servidor cuando se hace click en el boton de vender
 	$("#btn-sell").click(function() {
 		var total  = calcularTotal();
@@ -193,11 +207,7 @@ $(document).ready(function() {
                 });
 			},
             complete: function() {
-                $("#tbl-productos").html("");
-				$('#total-pagar').text("0.00");
-				$('#total').text("0.00");
-				$('#cambio').text("0.00");
-                habilitar_venta();
+                resetForm();
             }
         });
 	});

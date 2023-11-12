@@ -55,7 +55,7 @@
                   <input type='tel' class='form-control' id='telefono_proveedor' name='telefono_proveedor' required>
                 </div>
                 <div class='form-group col-md-6'>
-                  <label for='domicilio_proveedor'>Correo</label>
+                  <label for='domicilio_proveedor'>Domicilio</label>
                   <input type='text' class='form-control' id='domicilio_proveedor' name='domicilio_proveedor' required>
                 </div>
               </div>

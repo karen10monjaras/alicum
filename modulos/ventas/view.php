@@ -7,11 +7,13 @@
                     <div class="card-header">
                         <h2 class="text-center">Venta</h2>
                         <div class="form-outline">
-                            <input type="search" name="key" id="key" class="form-control" placeholder="Buscar por producto o código de barra" aria-label="Search" />
+                            <input type="search" name="key" id="key" class="form-control" placeholder="Buscar por producto por nombre" aria-label="Search" />
                         </div>
                         <div id="suggestions"></div>
-                        <div class="col-md-4 float-right">
+                        <div class="col-md-4 float-right d-flex align-items-center">
+                            <label for="cliente" class="mt-1 mr-1 h5">Cliente</label>
                             <select class="form-control mt-1" name="cliente" id="cliente">
+                                <!-- Se rellena dinámicamente -->
                             </select>
                         </div>
                     </div>

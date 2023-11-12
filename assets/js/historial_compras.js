@@ -78,7 +78,7 @@ $(document).ready(function() {
 // Mostrar transaccion
 $(document).on('click', '.btn-view', function() {
 var transaction_id = $(this).attr("id");
-$('#lista-productos').html("");
+$('#lista_productos').html("");
 
 $.ajax({
 url: "modulos/historial_compras/model.php",
@@ -93,24 +93,38 @@ success: function(response) {
   $("#fecha_compra").text(data.transaccion_data[0].fecha_compra);
   $("#nombre_proveedor").text(data.transaccion_data[0].nombre_proveedor);
   $("#responsable").text(data.transaccion_data[0].nombre_usuario);
-  $("#total_compra").text(data.transaccion_data[0].total_compra);
   $("#descripcion_compra").text(data.transaccion_data[0].descripcion_compra);
       
   var productosData = data.productos_data;
-  var listaProductos = $('#lista-productos');
-      
+  var listaProductos = $('#lista_productos');
+  
   $.each(productosData, function(index, producto) {
     var nombre_producto = producto.nombre_producto;
     var cantidad_producto = producto.cantidad_producto;
     var precio_compra = producto.precio_compra;
     var total_compra = cantidad_producto * precio_compra;
+    var tbody = ``;
 
-    var li = `
-    <li>
-      ${nombre_producto} x ${cantidad_producto} unidades a $ ${precio_compra} = $ ${total_compra}
-    </li>`;
-    listaProductos.append(li);
+    tbody += `
+    <tr>
+      <td>${nombre_producto}</td>
+      <td class="text-right">${cantidad_producto}</td>
+      <td class="text-right">${precio_compra}</td>
+      <td class="text-right">${total_compra}</td>
+    </tr>`;
+
+    listaProductos.append(tbody);
   });
+  // Añadir el total de la compra
+  tbody = `
+  <tr>
+    <td></td>
+    <td></td>
+    <td class="text-right"><b>Total</b></td>
+    <td class="text-right"><b>$ ${data.transaccion_data[0].total_compra}</b></td>
+  </tr>`;
+
+  listaProductos.append(tbody);
 }
 });
 });
@@ -140,7 +154,7 @@ if (result.isConfirmed) {
         icon: "success",
         title: response,
         showConfirmButton: false,
-        timer: 2000
+        timer: 600
       });
     },
     complete: function() {
