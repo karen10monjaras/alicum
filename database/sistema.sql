@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-10-2023 a las 10:28:23
+-- Tiempo de generación: 12-11-2023 a las 14:33:08
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.3.13
 
@@ -35,6 +35,14 @@ CREATE TABLE `almacen` (
   `stock` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `almacen`
+--
+
+INSERT INTO `almacen` (`id_producto`, `nombre_producto`, `precio_producto`, `stock`) VALUES
+(1, 'Alimento de cerdo 40kg', 400, 40),
+(2, 'Alimento de pollo 1kg', 20, 32);
+
 -- --------------------------------------------------------
 
 --
@@ -44,8 +52,17 @@ CREATE TABLE `almacen` (
 CREATE TABLE `clientes` (
   `id_cliente` int(11) NOT NULL,
   `nombre_cliente` text NOT NULL,
-  `telefono` varchar(18) NOT NULL
+  `telefono_cliente` varchar(18) NOT NULL,
+  `domicilio_cliente` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`id_cliente`, `nombre_cliente`, `telefono_cliente`, `domicilio_cliente`) VALUES
+(1, 'cliente genérico', '', 'Conocido'),
+(3, 'prueba', '2425345345', 'p');
 
 -- --------------------------------------------------------
 
@@ -57,8 +74,25 @@ CREATE TABLE `compras` (
   `id_compra` int(11) NOT NULL,
   `id_transaccion` int(11) NOT NULL,
   `id_producto` int(11) NOT NULL,
-  `cantidad_producto` int(11) NOT NULL
+  `cantidad_producto` int(11) NOT NULL,
+  `precio_compra` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `compras`
+--
+
+INSERT INTO `compras` (`id_compra`, `id_transaccion`, `id_producto`, `cantidad_producto`, `precio_compra`) VALUES
+(5, 2, 1, 1000, 0),
+(6, 3, 2, 40, 0),
+(7, 4, 1, 12, 0),
+(8, 5, 1, 1, 0),
+(9, 6, 2, 1, 0),
+(10, 7, 1, 1, 0),
+(11, 7, 2, 1, 0),
+(12, 8, 1, 1, 0),
+(13, 8, 2, 1, 0),
+(15, 10, 1, 15, 420);
 
 -- --------------------------------------------------------
 
@@ -69,8 +103,16 @@ CREATE TABLE `compras` (
 CREATE TABLE `proveedores` (
   `id_proveedor` int(11) NOT NULL,
   `nombre_proveedor` text NOT NULL,
-  `telefono_proveedor` varchar(18) NOT NULL
+  `telefono_proveedor` varchar(18) NOT NULL,
+  `domicilio_proveedor` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `proveedores`
+--
+
+INSERT INTO `proveedores` (`id_proveedor`, `nombre_proveedor`, `telefono_proveedor`, `domicilio_proveedor`) VALUES
+(1, 'Purina', '924 234 3455', '');
 
 -- --------------------------------------------------------
 
@@ -86,6 +128,21 @@ CREATE TABLE `transaccion_compras` (
   `total_compra` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `transaccion_compras`
+--
+
+INSERT INTO `transaccion_compras` (`id_transaccion`, `fecha_compra`, `id_proveedor`, `id_usuario`, `total_compra`) VALUES
+(2, '2023-11-07 06:39:24', 1, 1, 400000),
+(3, '2023-11-07 06:53:16', 1, 1, 800),
+(4, '2023-11-12 05:57:18', 1, 1, 4800),
+(5, '2023-11-12 05:59:34', 1, 1, 400),
+(6, '2023-11-12 06:03:57', 1, 1, 20),
+(7, '2023-11-12 06:22:31', 1, 1, 420),
+(8, '2023-11-12 06:29:03', 1, 1, 420),
+(9, '2023-11-12 11:25:40', 1, 1, 480),
+(10, '2023-11-12 12:40:24', 1, 1, 6900);
+
 -- --------------------------------------------------------
 
 --
@@ -99,6 +156,14 @@ CREATE TABLE `transaccion_ventas` (
   `id_usuario` int(11) NOT NULL,
   `total_venta` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `transaccion_ventas`
+--
+
+INSERT INTO `transaccion_ventas` (`id_transaccion`, `fecha_venta`, `id_cliente`, `id_usuario`, `total_venta`) VALUES
+(1, '2023-11-07 06:53:34', 1, 1, 200),
+(3, '2023-11-12 11:29:11', 1, 1, 48);
 
 -- --------------------------------------------------------
 
@@ -118,7 +183,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `nombre_usuario`, `contrasenia`) VALUES
-(1, 'KAREN YAMILET MONJARAS HERNÁNDEZ', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997');
+(1, 'KAREN YAMILET MONJARAS HERNÁNDEZ', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997'),
+(2, 'ARTURO SALAS HERNANDEZ', 'arturo15', '65e313615c709400f57b2c19b11931eabffd8cf6');
 
 -- --------------------------------------------------------
 
@@ -132,6 +198,13 @@ CREATE TABLE `ventas` (
   `id_producto` int(11) NOT NULL,
   `cantidad_producto` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `ventas`
+--
+
+INSERT INTO `ventas` (`id_venta`, `id_transaccion`, `id_producto`, `cantidad_producto`) VALUES
+(2, 1, 2, 10);
 
 --
 -- Índices para tablas volcadas
@@ -201,49 +274,49 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `almacen`
 --
 ALTER TABLE `almacen`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `compras`
 --
 ALTER TABLE `compras`
-  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
-  MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_proveedor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `transaccion_compras`
 --
 ALTER TABLE `transaccion_compras`
-  MODIFY `id_transaccion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_transaccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `transaccion_ventas`
 --
 ALTER TABLE `transaccion_ventas`
-  MODIFY `id_transaccion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_transaccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas

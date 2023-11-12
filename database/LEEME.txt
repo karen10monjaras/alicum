@@ -1,1 +1,0 @@
-La base de datos que esta dentro de la carpeta contiene datos de prueba, en cambio la base que esta fuera esta vacía con los id primarios restablecidos a 1
