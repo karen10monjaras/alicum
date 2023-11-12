@@ -17,15 +17,21 @@ $(document).ready(function() {
     // Funcion que habilita el boton de venta cuando hay productos en la tabla 
     function habilitar_compra() {
         var existingRows = $('#tbl-productos tr');
-        if (existingRows.length > 0 && parseFloat($('#total-pagar').text()) > 0) {
+        if (existingRows.length > 0) {
             $("#tbl-header").removeAttr("hidden");
-	        $("#btn-sell").removeAttr("disabled");
-            $("#btn-sell").fadeIn(500);
+	        $("#btn-buy").removeAttr("disabled");
+            
+            if (parseFloat($('#total-pagar').text()) > 0){
+                $("#btn-buy").fadeIn(500);
+            } else {
+                $("#btn-buy").attr("disabled", true);
+                $("#btn-buy").fadeOut(500);
+            }
 
         } else {
             $("#tbl-header").attr("hidden", true);
-            $("#btn-sell").attr("disabled", true);
-            $("#btn-sell").fadeOut(500);
+            $("#btn-buy").attr("disabled", true);
+            $("#btn-buy").fadeOut(500);
         }
     }
 
@@ -48,7 +54,7 @@ $(document).ready(function() {
   
 			var existingRow = $('#tbl-productos tr[data-id="' + id + '"]');
             if (existingRow.length > 0) {
-                var cantidadInput = existingRow.find('input[type="number"]');
+                var cantidadInput = existingRow.find('.cantidad');
                 var cantidad = parseInt(cantidadInput.val());
                 cantidadInput.val(cantidad + 1);
             } else {
@@ -56,10 +62,14 @@ $(document).ready(function() {
                 <tr data-id="${id}">
                     <td>8923716472</td>
                     <td>${producto}</td>
-                    <td>$ ${precio}</td>
                     <td>
                         <div class="form-outline">
-                            <input type="number" class="form-control" value="1"/>
+                            <input type="number" class="form-control precio" value="${precio}"/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-outline">
+                            <input type="number" class="form-control cantidad" value="1"/>
                         </div>
                     </td>
                     <td>
@@ -104,8 +114,8 @@ $(document).ready(function() {
     function calcularTotal() {
         var total = 0;
         $('#tbl-productos tr').each(function () {
-            var cantidad = parseInt($(this).find('input[type="number"]').val());
-            var precio = parseFloat($(this).find('td:eq(2)').text().replace('$', ''));
+            var cantidad = parseInt($(this).find('.cantidad').val());
+            var precio = parseFloat($(this).find('.precio').val());
             if (isNaN(cantidad)) {
                 cantidad = 0;
             }
@@ -127,8 +137,9 @@ $(document).ready(function() {
 
         $('#tbl-productos tr').each(function () {
             var id = $(this).data('id');
-            var cantidad = parseInt($(this).find('input[type="number"]').val());
-            dataToSend.push({ id: id, cantidad: cantidad });
+            var cantidad = parseInt($(this).find('.cantidad').val());
+            var precio = parseInt($(this).find('.precio').val());
+            dataToSend.push({ precio: precio, id: id, cantidad: cantidad });
         });
 
 		// Agrega el total al objeto JSON
@@ -141,6 +152,7 @@ $(document).ready(function() {
             url: "modulos/compras/model.php",
             data: { productos: JSON.stringify(dataToSend) },
             success: function (response) {
+                console.log(JSON.stringify(dataToSend))
                 Swal.fire({
                     icon: "success",
                     title: "Compra de insumos registrada exitosamente",

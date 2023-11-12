@@ -44,7 +44,7 @@
                                     <tr>
                                         <th>Código</th>
                                         <th>Producto</th>
-                                        <th>Precio Unidad</th>
+                                        <th>Precio compra (C/U)</th>
                                         <th>Cantidad compra</th>
                                         <th>Remover</th>
                                     </tr>

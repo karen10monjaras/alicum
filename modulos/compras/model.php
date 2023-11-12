@@ -46,13 +46,14 @@ try {
     for ($i = 0; $i < $limite; $i++) {
         $id = $data[$i]['id'];
         $cantidad = $data[$i]['cantidad'];
+        $precio = $data[$i]['precio'];
 
         // Realiza la consulta SQL para actualizar la cantidad vendida en la tabla correspondiente
         $query_update_stock = "UPDATE almacen SET stock = stock + $cantidad WHERE id_producto = $id";
         $result_update_stock = mysqli_query($conn, $query_update_stock);
 
-        $query_insert_compra = "INSERT INTO compras(id_compra, id_transaccion, id_producto, cantidad_producto) VALUES (NULL, $id_transaccion, $id, $cantidad)";
-        $result_insert_compra = mysqli_query($conn, $query_insert_compra);        
+        $query_insert_compra = "INSERT INTO compras(id_compra, id_transaccion, id_producto, cantidad_producto, precio_compra) VALUES (NULL, $id_transaccion, $id, $cantidad, $precio)";
+        $result_insert_compra = mysqli_query($conn, $query_insert_compra);
     }
 
     // Verifica si las inserciones fueron exitosas

@@ -9,7 +9,7 @@ if (isset($_POST['transaction_id'])) {
     $transaction_data = mysqli_query($conn, $query_transaction_data);
     $row = mysqli_fetch_all($transaction_data, MYSQLI_ASSOC);
 
-    $query_products_data = "SELECT a.nombre_producto, c.cantidad_producto FROM compras c INNER JOIN almacen a ON c.id_producto = a.id_producto WHERE id_transaccion = $id_transaccion ORDER BY a.nombre_producto ASC";
+    $query_products_data = "SELECT a.nombre_producto, c.cantidad_producto, c.precio_compra FROM compras c INNER JOIN almacen a ON c.id_producto = a.id_producto WHERE id_transaccion = $id_transaccion ORDER BY a.nombre_producto ASC";
     $products_data = mysqli_query($conn, $query_products_data);
     $row_products = mysqli_fetch_all($products_data, MYSQLI_ASSOC);
     
