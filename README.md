@@ -2,8 +2,12 @@
 
 ** Actualizacion 12/11/2023 **
 
-1. Falta añadir el logo al inicio de sesión
-2. Falta añadir el campo para descripcion al momento de realizar una venta (si quieren poner de descripción pago a credito o de contado) y que se muestre el cambio a devolver
+1. Falta añadir el campo para descripcion al momento de realizar una venta (si quieren poner de descripción pago a credito o de contado) y que se muestre el cambio a devolver
+
+A más tardar a las 10:00 AM ya estara listo el proyecto, para que lo descargues con el comando
+> **git pull**
+
+Y no tengas que importar varias veces la BD por los cambios :)
 
 ---
 
