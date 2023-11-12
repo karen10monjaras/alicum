@@ -36,7 +36,16 @@ $(document).ready(function() {
         columns: [
   { data: "id_proveedor" },
   { data: "nombre_proveedor" },
-  { data: "telefono_proveedor" },
+  {
+    data: "telefono_proveedor",
+    render: function (data, type) {
+      if (type === 'display') {
+        if (data == "") return "No agregado";
+      }
+      return data;
+    }
+  },
+  { data: "domicilio_proveedor" },
   {
     data: "id_proveedor",
     render: function (data, type) {
@@ -83,6 +92,7 @@ function resetForm() {
 $("#id_proveedor").val("");
 $("#nombre_proveedor").val("");
 $("#telefono_proveedor").val("");
+$("#domicilio_proveedor").val("");
 $(".btn-continue").attr("act", "insertar");
 }
 
@@ -130,6 +140,7 @@ $.ajax({
     $("#id_proveedor").val(data[0].id_proveedor);
     $("#nombre_proveedor").val(data[0].nombre_proveedor);
     $("#telefono_proveedor").val(data[0].telefono_proveedor);
+    $("#domicilio_proveedor").val(data[0].domicilio_proveedor);
     $(".btn-continue").attr("act", "actualizar");
   }
 });

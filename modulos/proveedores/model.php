@@ -6,8 +6,9 @@ if (isset($_POST['action'])) {
     if ($_POST['action'] == "insertar") {
         $nombre_proveedor = htmlspecialchars(trim($_POST['nombre_proveedor']), ENT_QUOTES, 'UTF-8');
         $telefono_proveedor = htmlspecialchars(trim($_POST['telefono_proveedor']), ENT_QUOTES, 'UTF-8');
+        $domicilio_proveedor = htmlspecialchars(trim($_POST['domicilio_proveedor']), ENT_QUOTES, 'UTF-8');
 
-        $query_proveedor_insert = "INSERT INTO proveedores(id_proveedor, nombre_proveedor, telefono_proveedor) VALUES(NULL, '$nombre_proveedor', '$telefono_proveedor')";
+        $query_proveedor_insert = "INSERT INTO proveedores(id_proveedor, nombre_proveedor, telefono_proveedor, domicilio_proveedor) VALUES(NULL, '$nombre_proveedor', '$telefono_proveedor', '$domicilio_proveedor')";
         $result_proveedor_insert = mysqli_query($conn, $query_proveedor_insert);  
 
         if ($result_proveedor_insert) echo "Registro exitoso";
@@ -16,8 +17,9 @@ if (isset($_POST['action'])) {
         $id_proveedor = htmlspecialchars(trim($_POST['id_proveedor']), ENT_QUOTES, 'UTF-8');
         $nombre_proveedor = htmlspecialchars(trim($_POST['nombre_proveedor']), ENT_QUOTES, 'UTF-8');
         $telefono_proveedor = htmlspecialchars(trim($_POST['telefono_proveedor']), ENT_QUOTES, 'UTF-8');
+        $domicilio_proveedor = htmlspecialchars(trim($_POST['domicilio_proveedor']), ENT_QUOTES, 'UTF-8');
 
-        $query_proveedores_update = "UPDATE proveedores SET nombre_proveedor = '$nombre_proveedor', telefono_proveedor = '$telefono_proveedor' WHERE id_proveedor = $id_proveedor";        
+        $query_proveedores_update = "UPDATE proveedores SET nombre_proveedor = '$nombre_proveedor', telefono_proveedor = '$telefono_proveedor', domicilio_proveedor = '$domicilio_proveedor' WHERE id_proveedor = $id_proveedor";        
         $result_proveedores_update = mysqli_query($conn, $query_proveedores_update);  
 
         if ($result_proveedores_update) echo "Actualización exitosa";

@@ -12,9 +12,9 @@
                   <thead>
                     <tr>
                       <th>ID producto</th>
-                      <th>Producto</th>
-                      <th>Precio C/Unidad</th>
-                      <th>Stock</th>
+                      <th>Nombre producto</th>
+                      <th>Precio venta C/Unidad</th>
+                      <th>Existencia</th>
                       <th>Opciones</th>
                     </tr>
                   </thead>
@@ -51,7 +51,7 @@
                   <input type='text' class='form-control' id='nombre_producto' name='nombre_producto' required>
                 </div>
                 <div class='form-group col-md-6'>
-                  <label for='precio_producto'>Precio por unidad</label>
+                  <label for='precio_producto'>Precio de venta (C/U)</label>
                   <input type='number' class='form-control' id='precio_producto' name='precio_producto' required>
                 </div>
               </div>

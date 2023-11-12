@@ -14,6 +14,7 @@
                       <th>ID cliente</th>
                       <th>Nombre</th>
                       <th>Teléfono</th>
+                      <th>Domicilio</th>
                       <th>Opciones</th>
                     </tr>
                   </thead>
@@ -45,13 +46,17 @@
             <form action="" method='POST'>
               <div class="card-body row">
                 <div class='form-group col-md-6'>
-                  <label for='nombre_usuario'>Nombre</label>
+                  <label for='nombre_cliente'>Nombre</label>
                   <input type='hidden' class='form-control' id='id_cliente' name='id_cliente'>
                   <input type='text' class='form-control' id='nombre_cliente' name='nombre_cliente' required>
                 </div>
                 <div class='form-group col-md-6'>
-                  <label for='usuario'>Teléfono</label>
-                  <input type='tel' class='form-control' id='telefono_cliente' name='telefono_cliente' required>
+                  <label for='telefono_cliente'>Teléfono</label>
+                  <input type='tel' class='form-control' id='telefono_cliente' name='telefono_cliente'>
+                </div>
+                <div class='form-group col-md-6'>
+                  <label for='domicilio_cliente'>Domicilio</label>
+                  <input type='text' class='form-control' id='domicilio_cliente' name='domicilio_cliente' required>
                 </div>
               </div>
               <!-- /.card-body -->

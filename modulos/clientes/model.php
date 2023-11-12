@@ -6,8 +6,9 @@ if (isset($_POST['action'])) {
     if ($_POST['action'] == "insertar") {
         $nombre_cliente = htmlspecialchars(trim($_POST['nombre_cliente']), ENT_QUOTES, 'UTF-8');
         $telefono_cliente = htmlspecialchars(trim($_POST['telefono_cliente']), ENT_QUOTES, 'UTF-8');
+        $domicilio_cliente = htmlspecialchars(trim($_POST['domicilio_cliente']), ENT_QUOTES, 'UTF-8');
 
-        $query_cliente_insert = "INSERT INTO clientes(id_cliente, nombre_cliente, telefono) VALUES(NULL, '$nombre_cliente', '$telefono_cliente')";
+        $query_cliente_insert = "INSERT INTO clientes(id_cliente, nombre_cliente, telefono_cliente, domicilio_cliente) VALUES(NULL, '$nombre_cliente', '$telefono_cliente', '$domicilio_cliente')";
         $result_cliente_insert = mysqli_query($conn, $query_cliente_insert);  
 
         if ($result_cliente_insert) echo "Registro exitoso";
@@ -16,8 +17,9 @@ if (isset($_POST['action'])) {
         $id_cliente = htmlspecialchars(trim($_POST['id_cliente']), ENT_QUOTES, 'UTF-8');
         $nombre_cliente = htmlspecialchars(trim($_POST['nombre_cliente']), ENT_QUOTES, 'UTF-8');
         $telefono_cliente = htmlspecialchars(trim($_POST['telefono_cliente']), ENT_QUOTES, 'UTF-8');
+        $domicilio_cliente = htmlspecialchars(trim($_POST['domicilio_cliente']), ENT_QUOTES, 'UTF-8');
 
-        $query_clientes_update = "UPDATE clientes SET nombre_cliente = '$nombre_cliente', telefono = '$telefono_cliente' WHERE id_cliente = $id_cliente";        
+        $query_clientes_update = "UPDATE clientes SET nombre_cliente = '$nombre_cliente', telefono_cliente = '$telefono_cliente', domicilio_cliente = '$domicilio_cliente' WHERE id_cliente = $id_cliente";        
         $result_clientes_update = mysqli_query($conn, $query_clientes_update);  
 
         if ($result_proveedores_update) echo "Actualización exitosa";

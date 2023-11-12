@@ -36,7 +36,16 @@ $(document).ready(function() {
         columns: [
   { data: "id_cliente" },
   { data: "nombre_cliente" },
-  { data: "telefono" },
+  {
+    data: "telefono_cliente",
+    render: function (data, type) {
+      if (type === 'display') {
+        if (data == "") return "No agregado";
+      }
+      return data;
+    }
+  },
+  { data: "domicilio_cliente" },
   {
     data: "id_cliente",
     render: function (data, type) {
@@ -83,6 +92,7 @@ function resetForm() {
 $("#id_cliente").val("");
 $("#nombre_cliente").val("");
 $("#telefono_cliente").val("");
+$("#domicilio_cliente").val("");
 $(".btn-continue").attr("act", "insertar");
 }
 
@@ -129,7 +139,8 @@ $.ajax({
 
     $("#id_cliente").val(data[0].id_cliente);
     $("#nombre_cliente").val(data[0].nombre_cliente);
-    $("#telefono_cliente").val(data[0].telefono);
+    $("#telefono_cliente").val(data[0].telefono_cliente);
+    $("#domicilio_cliente").val(data[0].domicilio_cliente);
     $(".btn-continue").attr("act", "actualizar");
   }
 });

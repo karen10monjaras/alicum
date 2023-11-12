@@ -17,11 +17,16 @@ $(document).ready(function() {
     // Funcion que habilita el boton de venta cuando hay productos en la tabla 
     function habilitar_venta() {
         var existingRows = $('#tbl-productos tr');
-        if (existingRows.length > 0 && parseFloat($('#total-pagar').text()) > 0) {
+        if (existingRows.length > 0){
             $("#tbl-header").removeAttr("hidden");
 	        $("#btn-sell").removeAttr("disabled");
-            $("#btn-sell").fadeIn(500);
 
+            if (parseFloat($('#total-pagar').text()) > 0) {
+                $("#btn-sell").fadeIn(500);
+            } else {
+                $("#btn-sell").attr("disabled", true);
+                $("#btn-sell").fadeOut(500);
+            }
         } else {
             $("#tbl-header").attr("hidden", true);
             $("#btn-sell").attr("disabled", true);

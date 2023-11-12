@@ -14,6 +14,7 @@
                       <th>ID proveedor</th>
                       <th>Nombre</th>
                       <th>Teléfono</th>
+                      <th>Domicilio</th>
                       <th>Opciones</th>
                     </tr>
                   </thead>
@@ -45,13 +46,17 @@
             <form action="" method='POST'>
               <div class="card-body row">
                 <div class='form-group col-md-6'>
-                  <label for='nombre_usuario'>Nombre</label>
+                  <label for='nombre_proveedor'>Nombre</label>
                   <input type='hidden' class='form-control' id='id_proveedor' name='id_proveedor'>
                   <input type='text' class='form-control' id='nombre_proveedor' name='nombre_proveedor' required>
                 </div>
                 <div class='form-group col-md-6'>
-                  <label for='usuario'>Teléfono</label>
+                  <label for='telefono_proveedor'>Teléfono</label>
                   <input type='tel' class='form-control' id='telefono_proveedor' name='telefono_proveedor' required>
+                </div>
+                <div class='form-group col-md-6'>
+                  <label for='domicilio_proveedor'>Correo</label>
+                  <input type='text' class='form-control' id='domicilio_proveedor' name='domicilio_proveedor' required>
                 </div>
               </div>
               <!-- /.card-body -->

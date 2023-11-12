@@ -3,7 +3,7 @@ session_start();
 require_once "../database.php";
 
 if (isset($_POST['clientes'])){
-    $html = '';
+    $html = "";
 
     $query = "SELECT id_cliente, nombre_cliente FROM clientes";
     $result = mysqli_query($conn, $query);
