@@ -42,10 +42,13 @@ try {
     echo "query: $query_insert_transaction\n
     id_t: $id_transaccion\n\n";
 
+    $limite = count($data) - 2;
+
     // Itera sobre los datos y actualiza la base de datos
-    foreach ($data as $item) {
-        $id = $item['id'];
-        $cantidad = $item['cantidad'];
+    // foreach ($data as $item) {
+    for ($i = 0; $i < $limite; $i++) {
+        $id = $data[$i]['id'];
+        $cantidad = $data[$i]['cantidad'];
 
         // Realiza la consulta SQL para actualizar la cantidad vendida en la tabla correspondiente
         $query_update_stock = "UPDATE almacen SET stock = stock + $cantidad WHERE id_producto = $id";

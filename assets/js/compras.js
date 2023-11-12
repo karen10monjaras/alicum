@@ -141,6 +141,7 @@ $(document).ready(function() {
             url: "modulos/compras/model.php",
             data: { productos: JSON.stringify(dataToSend) },
             success: function (response) {
+                console.log(JSON.stringify(dataToSend))
                 Swal.fire({
                     title: `${response}?`,
                     icon: 'question',
