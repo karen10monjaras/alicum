@@ -5,7 +5,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-body">
-                <button type='button' class='btn btn-sm btn-info btn-new'  data-toggle='modal' data-target='#exampleModalLive'>
+                <button type='button' class='btn btn-sm btn-info btn-new' data-toggle='modal' data-target='#exampleModalLive'>
                   Nuevo cliente
                 </button>
                 <table id="example1" class="table table-bordered table-striped">

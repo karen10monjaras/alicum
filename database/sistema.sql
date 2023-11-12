@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-11-2023 a las 14:33:08
+-- Tiempo de generación: 12-11-2023 a las 16:05:03
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.3.13
 
@@ -40,8 +40,8 @@ CREATE TABLE `almacen` (
 --
 
 INSERT INTO `almacen` (`id_producto`, `nombre_producto`, `precio_producto`, `stock`) VALUES
-(1, 'Alimento de cerdo 40kg', 400, 40),
-(2, 'Alimento de pollo 1kg', 20, 32);
+(1, 'Alimento de cerdo 40kg', 400, 56),
+(2, 'Alimento de pollo 1kg', 20, 123);
 
 -- --------------------------------------------------------
 
@@ -92,7 +92,9 @@ INSERT INTO `compras` (`id_compra`, `id_transaccion`, `id_producto`, `cantidad_p
 (11, 7, 2, 1, 0),
 (12, 8, 1, 1, 0),
 (13, 8, 2, 1, 0),
-(15, 10, 1, 15, 420);
+(15, 10, 1, 15, 420),
+(17, 11, 1, 20, 410),
+(18, 11, 2, 100, 20);
 
 -- --------------------------------------------------------
 
@@ -125,23 +127,25 @@ CREATE TABLE `transaccion_compras` (
   `fecha_compra` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `id_proveedor` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  `total_compra` int(11) NOT NULL
+  `total_compra` int(11) NOT NULL,
+  `descripcion_compra` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `transaccion_compras`
 --
 
-INSERT INTO `transaccion_compras` (`id_transaccion`, `fecha_compra`, `id_proveedor`, `id_usuario`, `total_compra`) VALUES
-(2, '2023-11-07 06:39:24', 1, 1, 400000),
-(3, '2023-11-07 06:53:16', 1, 1, 800),
-(4, '2023-11-12 05:57:18', 1, 1, 4800),
-(5, '2023-11-12 05:59:34', 1, 1, 400),
-(6, '2023-11-12 06:03:57', 1, 1, 20),
-(7, '2023-11-12 06:22:31', 1, 1, 420),
-(8, '2023-11-12 06:29:03', 1, 1, 420),
-(9, '2023-11-12 11:25:40', 1, 1, 480),
-(10, '2023-11-12 12:40:24', 1, 1, 6900);
+INSERT INTO `transaccion_compras` (`id_transaccion`, `fecha_compra`, `id_proveedor`, `id_usuario`, `total_compra`, `descripcion_compra`) VALUES
+(2, '2023-11-07 06:39:24', 1, 1, 400000, ''),
+(3, '2023-11-07 06:53:16', 1, 1, 800, ''),
+(4, '2023-11-12 05:57:18', 1, 1, 4800, ''),
+(5, '2023-11-12 05:59:34', 1, 1, 400, ''),
+(6, '2023-11-12 06:03:57', 1, 1, 20, ''),
+(7, '2023-11-12 06:22:31', 1, 1, 420, ''),
+(8, '2023-11-12 06:29:03', 1, 1, 420, ''),
+(9, '2023-11-12 11:25:40', 1, 1, 480, ''),
+(10, '2023-11-12 12:40:24', 1, 1, 6900, ''),
+(11, '2023-11-12 15:00:27', 1, 1, 10200, '');
 
 -- --------------------------------------------------------
 
@@ -154,16 +158,19 @@ CREATE TABLE `transaccion_ventas` (
   `fecha_venta` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `id_cliente` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  `total_venta` double NOT NULL
+  `total_venta` double NOT NULL,
+  `descripcion_venta` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `transaccion_ventas`
 --
 
-INSERT INTO `transaccion_ventas` (`id_transaccion`, `fecha_venta`, `id_cliente`, `id_usuario`, `total_venta`) VALUES
-(1, '2023-11-07 06:53:34', 1, 1, 200),
-(3, '2023-11-12 11:29:11', 1, 1, 48);
+INSERT INTO `transaccion_ventas` (`id_transaccion`, `fecha_venta`, `id_cliente`, `id_usuario`, `total_venta`, `descripcion_venta`) VALUES
+(1, '2023-11-07 06:53:34', 1, 1, 200, ''),
+(3, '2023-11-12 11:29:11', 1, 1, 48, ''),
+(4, '2023-11-12 14:31:28', 1, 1, 880, 'Contado'),
+(5, '2023-11-12 14:45:58', 1, 1, 900, 'Efectivo');
 
 -- --------------------------------------------------------
 
@@ -196,15 +203,20 @@ CREATE TABLE `ventas` (
   `id_venta` int(11) NOT NULL,
   `id_transaccion` int(11) NOT NULL,
   `id_producto` int(11) NOT NULL,
-  `cantidad_producto` int(11) NOT NULL
+  `cantidad_producto` int(11) NOT NULL,
+  `precio_venta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `ventas`
 --
 
-INSERT INTO `ventas` (`id_venta`, `id_transaccion`, `id_producto`, `cantidad_producto`) VALUES
-(2, 1, 2, 10);
+INSERT INTO `ventas` (`id_venta`, `id_transaccion`, `id_producto`, `cantidad_producto`, `precio_venta`) VALUES
+(2, 1, 2, 10, 0),
+(6, 4, 1, 2, 0),
+(7, 4, 2, 4, 0),
+(8, 5, 1, 2, 400),
+(9, 5, 2, 5, 20);
 
 --
 -- Índices para tablas volcadas
@@ -286,7 +298,7 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT de la tabla `compras`
 --
 ALTER TABLE `compras`
-  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
@@ -298,13 +310,13 @@ ALTER TABLE `proveedores`
 -- AUTO_INCREMENT de la tabla `transaccion_compras`
 --
 ALTER TABLE `transaccion_compras`
-  MODIFY `id_transaccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_transaccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `transaccion_ventas`
 --
 ALTER TABLE `transaccion_ventas`
-  MODIFY `id_transaccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_transaccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -316,7 +328,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas

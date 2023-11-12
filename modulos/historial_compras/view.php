@@ -42,7 +42,7 @@
 					</div>
 					<div class="modal-body row">
             <div class="col-md-6">
-              <span>Fecha compra</span>
+              <span>Fecha de compra</span>
               <p id="fecha_compra"></p>
             </div>
             <div class="col-md-6">
@@ -54,11 +54,11 @@
               <p id="responsable"></p>
             </div>
             <div class="col-md-6">
-              <span>Total compra ($)</span>
+              <span>Importe total de compra ($)</span>
               <p id="total_compra"></p>
             </div>
             <div class='col-md-12'>
-              <span>Insumos</span>
+              <span>Insumos comprados</span>
               <ul id="lista-productos" style="list-style: none; padding: 0; margin: 0;"></ul>
             </div>
 					</div>

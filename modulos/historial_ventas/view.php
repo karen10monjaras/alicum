@@ -43,7 +43,7 @@
 					<div class="modal-body row">
 						
             <div class="col-md-6">
-              <span>Fecha venta</span>
+              <span>Fecha de venta</span>
               <p id="fecha_venta"></p>
             </div>
             <div class="col-md-6">
@@ -51,15 +51,15 @@
               <p id="nombre_cliente"></p>
             </div>
             <div class="col-md-6">
-              <span>Responsable</span>
+              <span>Atendió</span>
               <p id="responsable"></p>
             </div>
             <div class="col-md-6">
-              <span>Total venta ($)</span>
+              <span>Importe total de venta ($)</span>
               <p id="total_venta"></p>
             </div>
             <div class='col-md-12'>
-              <span>Productos</span>
+              <span>Productos vendidos</span>
               <ul id="lista-productos" style="list-style: none; padding: 0; margin: 0;"></ul>
             </div>
 					</div>

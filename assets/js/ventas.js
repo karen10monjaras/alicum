@@ -62,7 +62,7 @@ $(document).ready(function() {
                 <tr data-id="${id}">
                     <td>8923716472</td>
                     <td>${producto}</td>
-                    <td>$ ${precio}</td>
+                    <td class='precio'>$ ${precio}</td>
                     <td old_stock='${existencias}'>${existencias}</td>
                     <td>
                         <div class="form-outline">
@@ -136,6 +136,7 @@ $(document).ready(function() {
 
 		total = total.toFixed(2);
         $('#total-pagar').text(total);
+        $('#total').val("$ " + total);
         habilitar_venta();
 
 		return total;
@@ -152,6 +153,16 @@ $(document).ready(function() {
         }
     });
 
+    // Cambiar el total de cambio cuando se modifica el pago
+    $("#pago").on("keyup", function() {
+        var pago = parseFloat($(this).val());
+        var total = parseFloat($('#total-pagar').text());
+        var cambio = pago - total;
+        if (cambio < 0) cambio = 0;
+        $('#cambio').val("$ " + cambio.toFixed(2));
+    });
+
+    // Enviar los datos al servidor cuando se hace click en el boton de vender
 	$("#btn-sell").click(function() {
 		var total  = calcularTotal();
         var dataToSend = [];
@@ -159,10 +170,12 @@ $(document).ready(function() {
         $('#tbl-productos tr').each(function () {
             var id = $(this).data('id');
             var cantidad = parseInt($(this).find('input[type="number"]').val());
-            dataToSend.push({ id: id, cantidad: cantidad });
+            var precio = parseFloat($(this).find('td:eq(2)').text().replace('$', ''));
+            dataToSend.push({ precio: precio, id: id, cantidad: cantidad });
         });
 
 		// Agrega el total al objeto JSON
+		dataToSend.push({ descripcion: $("#descripcion_venta").val() });
 		dataToSend.push({ total: total });
 		dataToSend.push({ cliente: $("#cliente").val() });
 
@@ -182,6 +195,8 @@ $(document).ready(function() {
             complete: function() {
                 $("#tbl-productos").html("");
 				$('#total-pagar').text("0.00");
+				$('#total').text("0.00");
+				$('#cambio').text("0.00");
                 habilitar_venta();
             }
         });

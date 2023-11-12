@@ -99,10 +99,14 @@ success: function(response) {
   var listaProductos = $('#lista-productos');
       
   $.each(productosData, function(index, producto) {
-    // var li = $('<li class="d-inline-flesx" style="list-style: none !important; margin: 2px 2px 0 0;"><span class="p-1 rounded">' + producto.cantidad_producto + " - " + producto.nombre_producto + " - " + producto.precio_compra + '</span></li>');
+    var nombre_producto = producto.nombre_producto;
+    var cantidad_producto = producto.cantidad_producto;
+    var precio_compra = producto.precio_compra;
+    var total_compra = cantidad_producto * precio_compra;
+
     var li = `
     <li>
-        ${producto.nombre_producto} x ${producto.cantidad_producto} unidades a $${producto.precio_compra}
+      ${nombre_producto} x ${cantidad_producto} unidades a $ ${precio_compra} = $ ${total_compra}
     </li>`;
     listaProductos.append(li);
   });

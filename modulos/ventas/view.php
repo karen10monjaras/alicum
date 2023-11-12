@@ -36,7 +36,9 @@
                     </div>
                     <div class="container-fluid border d-flex">
                         <div class="h3 m-4">TOTAL A PAGAR: $ <span id="total-pagar">0.00</span></div>
-                        <button id="btn-sell" class="btn btn-sm btn-outline-success my-3">Realizar venta</button>
+                        <button type='button' id="btn-confirm" class='btn btn-sm btn-outline-success my-3' data-toggle='modal' data-target='#exampleModalLive'>
+                            Continuar
+                        </button>
                     </div>
                 </div>
             </div>
@@ -45,6 +47,43 @@
         <!-- /.row -->
     </section>
     <!-- /.content -->
+
+    <div id="exampleModalLive" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLiveLabel">Confirmar venta</h5>
+					<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body row">
+                    <form action="" method='POST'>
+                        <div class="card-body row">
+                            <div class='form-group col-md-6'>
+                                <label for='pago'>Pago con:</label>
+                                <input type='number' class='form-control' id='pago' name='pago'>
+                            </div>
+                            <div class='form-group col-md-6'>
+                                <label for='total'>Total a pagar:</label>
+                                <input type='text' class='form-control' id='total' name='total' disabled>
+                            </div>
+                            <div class='form-group col-md-6'>
+                                <label for='descripcion_venta'>Descripción</label>
+                                <textarea class="form-control" id="descripcion_venta" name="descripcion_venta" cols="2" placeholder="Ej. Pago en efectivo/crédito"></textarea>
+                            </div>
+                            <div class='form-group col-md-6'>
+                                <label for='cambio'>Cambio a devolver:</label>
+                                <input type='text' class='form-control' id='cambio' name='cambio' disabled>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class='text-center mb-4'>
+                            <button type='submit' id="btn-sell" class='btn btn-outline-success btn-continue' act='insertar' data-dismiss='modal'>Confirmar</button>
+                        </div>
+                    </form>
+				</div>
+			</div>
+		</div>
+	</div>
 
     <!-- Funciones para el modulo ventas -->
     <script src="assets/js/ventas.js"></script>

@@ -31,9 +31,10 @@ try {
     $id_cliente = $data[count($data) - 1]['cliente'];
     $id_usuario = $_SESSION['id_usuario'];
     $total_venta = $data[count($data) - 2]['total'];
+    $descripcion_venta = $data[count($data) - 3]['descripcion'];
 
     // Se hace el insert en la tabla transaccion
-    $query_insert_transaction = "INSERT INTO transaccion_ventas(id_transaccion, id_cliente, id_usuario, total_venta) VALUES (NULL, $id_cliente, $id_usuario, $total_venta)";                
+    $query_insert_transaction = "INSERT INTO transaccion_ventas(id_transaccion, id_cliente, id_usuario, total_venta, descripcion_venta) VALUES (NULL, $id_cliente, $id_usuario, $total_venta, '$descripcion_venta')";                
     $result_insert_transaction = mysqli_query($conn, $query_insert_transaction);
 
     // Se obtiene el id de la ultima transaccion
@@ -45,12 +46,13 @@ try {
     for ($i = 0; $i < $limite; $i++) {
         $id = $data[$i]['id'];
         $cantidad = $data[$i]['cantidad'];
+        $precio = $data[$i]['precio'];
 
         // Realiza la consulta SQL para actualizar la cantidad vendida en la tabla correspondiente
         $query_update_stock = "UPDATE almacen SET stock = stock - $cantidad WHERE id_producto = $id";
         $result_update_stock = mysqli_query($conn, $query_update_stock);
 
-        $query_insert_product = "INSERT INTO ventas(id_venta, id_transaccion, id_producto, cantidad_producto) VALUES (NULL, $id_transaccion, $id, $cantidad)";
+        $query_insert_product = "INSERT INTO ventas(id_venta, id_transaccion, id_producto, cantidad_producto, precio_venta) VALUES (NULL, $id_transaccion, $id, $cantidad, $precio)";
         $result_insert_product = mysqli_query($conn, $query_insert_product);        
     }
 
