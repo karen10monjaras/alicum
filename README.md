@@ -1,8 +1,8 @@
 # **IMPORTANTE**
 
-** Actualizacion 12/11/2023 **
+**Actualizacion 12/11/2023**
 
-1. Falta añadir formulario antes de registrar una compra de insumos (si quieren poner de descripción por ejemplo pagó a crédito o de contado)
+** Corrección de errores ** 
 
 La base de datos ya se encuentra en la carpeta database :)
 

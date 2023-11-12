@@ -22,16 +22,16 @@ $(document).ready(function() {
 	        $("#btn-buy").removeAttr("disabled");
             
             if (parseFloat($('#total-pagar').text()) > 0){
-                $("#btn-buy").fadeIn(500);
+                $("#btn-buy").fadeIn(50);
             } else {
                 $("#btn-buy").attr("disabled", true);
-                $("#btn-buy").fadeOut(500);
+                $("#btn-buy").fadeOut(50);
             }
 
         } else {
             $("#tbl-header").attr("hidden", true);
             $("#btn-buy").attr("disabled", true);
-            $("#btn-buy").fadeOut(500);
+            $("#btn-buy").fadeOut(50);
         }
     }
 
@@ -60,7 +60,6 @@ $(document).ready(function() {
             } else {
                 template = `
                 <tr data-id="${id}">
-                    <td>8923716472</td>
                     <td>${producto}</td>
                     <td>
                         <div class="form-outline">
@@ -116,9 +115,10 @@ $(document).ready(function() {
         $('#tbl-productos tr').each(function () {
             var cantidad = parseInt($(this).find('.cantidad').val());
             var precio = parseFloat($(this).find('.precio').val());
-            if (isNaN(cantidad)) {
-                cantidad = 0;
-            }
+            
+            if (cantidad <= 0) $(this).find('.cantidad').val("1");
+            
+            if (isNaN(cantidad)) cantidad = 0;
 
             var subtotal = cantidad * precio;
             total += subtotal;

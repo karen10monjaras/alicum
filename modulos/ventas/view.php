@@ -22,7 +22,6 @@
                             <table class="table table-striped table-sm">
                                 <thead id="tbl-header">
                                     <tr>
-                                        <th>Código</th>
                                         <th>Producto</th>
                                         <th>Precio C/Unidad</th>
                                         <th>En almácen</th>

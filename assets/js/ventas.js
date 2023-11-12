@@ -60,7 +60,6 @@ $(document).ready(function() {
             } else {
                 template = `
                 <tr data-id="${id}">
-                    <td>8923716472</td>
                     <td>${producto}</td>
                     <td class='precio'>$ ${precio}</td>
                     <td old_stock='${existencias}'>${existencias}</td>
@@ -112,10 +111,12 @@ $(document).ready(function() {
         var total = 0;
         $('#tbl-productos tr').each(function () {
             var cantidad = parseInt($(this).find('input[type="number"]').val());
-            var precio = parseFloat($(this).find('td:eq(2)').text().replace('$', ''));
-            var stockCell = $(this).find('td:eq(3)');
+            var precio = parseFloat($(this).find('td:eq(1)').text().replace('$', ''));
+            var stockCell = $(this).find('td:eq(2)');
             var old_stock = parseInt(stockCell.attr("old_stock"));
             var stock = parseInt(stockCell.text());
+    
+            if (cantidad <= 0) $(this).find('input[type="number"]').val("1");
         
             if (isNaN(cantidad)) cantidad = 0;
         
@@ -144,7 +145,7 @@ $(document).ready(function() {
 
     $('#tbl-productos tr').on('change', 'input[type="number"]', function () {
         var cantidad = parseInt($(this).val());
-        var stockCell = $(this).closest('tr').find('td:eq(3)');
+        var stockCell = $(this).closest('tr').find('td:eq(2)');
         var old_stock = parseInt(stockCell.attr("old_stock"));
     
         if (!isNaN(old_stock)) {
@@ -184,7 +185,7 @@ $(document).ready(function() {
         $('#tbl-productos tr').each(function () {
             var id = $(this).data('id');
             var cantidad = parseInt($(this).find('input[type="number"]').val());
-            var precio = parseFloat($(this).find('td:eq(2)').text().replace('$', ''));
+            var precio = parseFloat($(this).find('td:eq(1)').text().replace('$', ''));
             dataToSend.push({ precio: precio, id: id, cantidad: cantidad });
         });
 
