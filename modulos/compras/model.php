@@ -19,7 +19,6 @@ if (isset($_POST['proveedores'])){
     }
 
     echo $html;
-    return;
 }
 
 
@@ -40,6 +39,9 @@ try {
     // Se obtiene el id de la ultima transaccion
     $id_transaccion = mysqli_insert_id($conn);
 
+    echo "query: $query_insert_transaction\n
+    id_t: $id_transaccion\n\n";
+
     // Itera sobre los datos y actualiza la base de datos
     foreach ($data as $item) {
         $id = $item['id'];
@@ -50,7 +52,10 @@ try {
         $result_update_stock = mysqli_query($conn, $query_update_stock);
 
         $query_insert_compra = "INSERT INTO compras(id_compra, id_transaccion, id_producto, cantidad_producto) VALUES (NULL, $id_transaccion, $id, $cantidad)";
-        $result_insert_compra = mysqli_query($conn, $query_insert_compra);        
+        $result_insert_compra = mysqli_query($conn, $query_insert_compra);
+        
+        echo "query_u: $query_update_stock\n
+        query_i: $query_insert_compra\n\n";
     }
 
     // Verifica si las inserciones fueron exitosas

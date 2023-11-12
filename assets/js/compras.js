@@ -142,10 +142,13 @@ $(document).ready(function() {
             data: { productos: JSON.stringify(dataToSend) },
             success: function (response) {
                 Swal.fire({
-                    icon: "success",
-                    title: "Compra de insumos registrada exitosamente",
-                    showConfirmButton: false,
-                    timer: 1500
+                    title: `${response}?`,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, continuar!',
+                    cancelButtonText: 'Cancelar'
                 });
 			},
             complete: function() {
