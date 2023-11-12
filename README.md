@@ -1,5 +1,12 @@
 # **SISTEMA "_TERMINADO_"**
 
+** Actualizacion 12/11/2023 **
+
+1. Falta añadir el logo al inicio de sesión
+2. Falta añadir el campo para descripcion al momento de realizar una venta (si quieren poner de descripción pago a credito o de contado) y que se muestre el cambio a devolver
+
+---
+
 > Cuando tengas tiempo puedes descargar el proyecto y probarlo, cualquier duda estaré al pendiente.
 >
 > Si encuentras algún error en el sistema por favor hazmelo saber para corregirlo. 
@@ -14,8 +21,8 @@
 
 > | Campo       | Credenciales |
 > |-------------|--------------|
-> | Usuario:    | admin        |
-> | Contraseña: | admin        |
+> | Usuario     | admin        |
+> | Contraseña  | admin        |
 
 Estos son los datos de acceso por defecto, puedes agregar nuevos usuarios administradores como gustes una vez estando dentro del sistema.
 
