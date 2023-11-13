@@ -38,7 +38,14 @@ $(document).ready(function() {
 { data: "fecha_venta" },
 { data: "nombre_cliente" },
 { data: "nombre_usuario" },
-{ data: "total_venta" },
+{ data: "total_venta",
+  render: function (data, type) {
+    if (type === 'display') {
+      template = `` + parseFloat(data).toLocaleString('es-MX', { minimumFractionDigits: 2 });
+    }
+    return template;
+  }
+},
 {
   data: "id_transaccion",
   render: function (data, type) {
@@ -93,7 +100,6 @@ success: function(response) {
   $("#fecha_venta").text(data.transaccion_data[0].fecha_venta);
   $("#nombre_cliente").text(data.transaccion_data[0].nombre_cliente);
   $("#responsable").text(data.transaccion_data[0].nombre_usuario);
-  $("#total_venta").text(data.transaccion_data[0].total_venta);
   $("#descripcion_venta").text(data.transaccion_data[0].descripcion_venta);
       
   var productosData = data.productos_data;
@@ -101,9 +107,10 @@ success: function(response) {
       
   $.each(productosData, function(index, producto) {
     var nombre_producto = producto.nombre_producto;
-    var cantidad_producto = producto.cantidad_producto;
-    var precio_venta = producto.precio_venta;
-    var total_venta = cantidad_producto * precio_venta;
+    var cantidad_producto = parseFloat(producto.cantidad_producto).toLocaleString('es-MX', { minimumFractionDigits: 2 });
+    var precio_venta = parseFloat(producto.precio_venta).toLocaleString('es-MX', { minimumFractionDigits: 2 });
+    var calculo = parseFloat(cantidad_producto.replace(/,/g, '')) * parseFloat(precio_venta.replace(/,/g, ''));
+    var subtotal_venta = calculo.toLocaleString('es-MX', { minimumFractionDigits: 2 });
     var tbody = ``;
 
     tbody += `
@@ -111,7 +118,7 @@ success: function(response) {
       <td>${nombre_producto}</td>
       <td class="text-right">${cantidad_producto}</td>
       <td class="text-right">${precio_venta}</td>
-      <td class="text-right">${total_venta}</td>
+      <td class="text-right">${subtotal_venta}</td>
     </tr>`;
 
     listaProductos.append(tbody);
@@ -122,7 +129,7 @@ success: function(response) {
     <td></td>
     <td></td>
     <td class="text-right"><b>Total</b></td>
-    <td class="text-right"><b>$ ${data.transaccion_data[0].total_venta}</b></td>
+    <td class="text-right"><b>$ ${parseFloat(data.transaccion_data[0].total_venta).toLocaleString('es-MX', { minimumFractionDigits: 2 })}</b></td>
   </tr>`;
 
   listaProductos.append(tbody);

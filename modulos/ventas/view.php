@@ -62,11 +62,11 @@
                         <div class="card-body row">
                             <div class='form-group col-md-6'>
                                 <label for='pago'>Pago con:</label>
-                                <input type='number' class='form-control' id='pago' name='pago'>
+                                <input type='number' class='form-control' id='pago'>
                             </div>
                             <div class='form-group col-md-6'>
                                 <label for='total'>Total a pagar:</label>
-                                <input type='text' class='form-control' id='total' name='total' disabled>
+                                <p class='form-control'>$ <span id='total'></span></p>
                             </div>
                             <div class='form-group col-md-6'>
                                 <label for='descripcion_venta'>Descripción</label>
@@ -74,7 +74,7 @@
                             </div>
                             <div class='form-group col-md-6'>
                                 <label for='cambio'>Cambio a devolver:</label>
-                                <input type='text' class='form-control' id='cambio' name='cambio' disabled>
+                                <p class='form-control'>$ <span id='cambio'></span></p>
                             </div>
                         </div>
                         <!-- /.card-body -->

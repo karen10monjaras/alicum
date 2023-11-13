@@ -36,8 +36,22 @@ $(document).ready(function() {
     columns: [
       { data: "id_producto" },
       { data: "nombre_producto" },
-      { data: "precio_producto" },
-      { data: "stock" },
+      { data: "precio_producto",
+        render: function (data, type) {
+          if (type === 'display') {
+            template = `` + parseFloat(data).toLocaleString('es-MX', { minimumFractionDigits: 2 });
+          }
+          return template;
+        }
+      },
+      { data: "stock",
+        render: function (data, type) {
+          if (type === 'display') {
+            template = `` + parseFloat(data).toLocaleString('es-MX', { minimumFractionDigits: 2 });
+          }
+          return template;
+        }
+      },
       {
         data: "id_producto",
         render: function (data, type) {

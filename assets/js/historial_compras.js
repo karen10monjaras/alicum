@@ -38,7 +38,14 @@ $(document).ready(function() {
 { data: "fecha_compra" },
 { data: "nombre_proveedor" },
 { data: "nombre_usuario" },
-{ data: "total_compra" },
+{ data: "total_compra",
+  render: function (data, type) {
+    if (type === 'display') {
+      template = `` + parseFloat(data).toLocaleString('es-MX', { minimumFractionDigits: 2 });
+    }
+    return template;
+  }
+},
 {
   data: "id_transaccion",
   render: function (data, type) {
@@ -100,9 +107,10 @@ success: function(response) {
   
   $.each(productosData, function(index, producto) {
     var nombre_producto = producto.nombre_producto;
-    var cantidad_producto = producto.cantidad_producto;
-    var precio_compra = producto.precio_compra;
-    var total_compra = cantidad_producto * precio_compra;
+    var cantidad_producto = parseFloat(producto.cantidad_producto).toLocaleString('es-MX', { minimumFractionDigits: 2 });
+    var precio_compra = parseFloat(producto.precio_compra).toLocaleString('es-MX', { minimumFractionDigits: 2 });
+    var calculo = parseFloat(cantidad_producto.replace(/,/g, '')) * parseFloat(precio_compra.replace(/,/g, ''));
+    var subtotal_compra = calculo.toLocaleString('es-MX', { minimumFractionDigits: 2 });
     var tbody = ``;
 
     tbody += `
@@ -110,7 +118,7 @@ success: function(response) {
       <td>${nombre_producto}</td>
       <td class="text-right">${cantidad_producto}</td>
       <td class="text-right">${precio_compra}</td>
-      <td class="text-right">${total_compra}</td>
+      <td class="text-right">${subtotal_compra}</td>
     </tr>`;
 
     listaProductos.append(tbody);
@@ -121,7 +129,7 @@ success: function(response) {
     <td></td>
     <td></td>
     <td class="text-right"><b>Total</b></td>
-    <td class="text-right"><b>$ ${data.transaccion_data[0].total_compra}</b></td>
+    <td class="text-right"><b>$ ${parseFloat(data.transaccion_data[0].total_compra).toLocaleString('es-MX', { minimumFractionDigits: 2 })}</b></td>
   </tr>`;
 
   listaProductos.append(tbody);

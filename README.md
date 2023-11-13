@@ -1,10 +1,17 @@
 # **IMPORTANTE**
 
-**Actualizacion 12/11/2023**
+**Actualizacion 13/11/2023**
 
-** Corrección de errores ** 
+Cambios:
 
-La base de datos ya se encuentra en la carpeta database :)
+1. Ya se implementó el uso de , cuando en las cifras de dinero mayor a 1000.
+
+2. Elimine algunas carpetas de plugins que no se estaban ocupando.
+
+---
+
+Abre la terminal de git bash en la carpeta alicum y ejecuta el comando:
+> git pull
 
 Cualquier duda ya sabes 😉
 

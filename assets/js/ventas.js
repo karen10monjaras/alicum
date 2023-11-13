@@ -48,7 +48,7 @@ $(document).ready(function() {
           $('#suggestions').fadeIn(100).html(response);
           $('.suggest-element').on('click', function(){
             var id = $(this).attr('id');
-            var precio = $(this).attr('precio');
+            var precio = parseFloat($(this).attr('precio')).toLocaleString('es-MX', { minimumFractionDigits: 2 });
             var existencias = $(this).attr('stock');
             var producto = $(this).text();
   
@@ -61,13 +61,14 @@ $(document).ready(function() {
                 template = `
                 <tr data-id="${id}">
                     <td>${producto}</td>
-                    <td class='precio'>$ ${precio}</td>
+                    <td>$ <span class='precio'>${precio}</span></td>
                     <td old_stock='${existencias}'>${existencias}</td>
                     <td>
                         <div class="form-outline">
                             <input type="number" class="form-control" value="1"/>
                         </div>
                     </td>
+                    <td>$ <span class='subtotal'>${precio}</span></td>
                     <td>
 						<button id="${id}" class="btn btn-sm btn-outline-danger delete-product" data-id="${id}">
 							<i class="fa fas fa-trash"></i>
@@ -111,15 +112,16 @@ $(document).ready(function() {
         var total = 0;
         $('#tbl-productos tr').each(function () {
             var cantidad = parseInt($(this).find('input[type="number"]').val());
-            var precio = parseFloat($(this).find('td:eq(1)').text().replace('$', ''));
+            var precio = parseFloat($(this).find('.precio').text().replace(/,/g, ''));
             var stockCell = $(this).find('td:eq(2)');
             var old_stock = parseInt(stockCell.attr("old_stock"));
             var stock = parseInt(stockCell.text());
-    
+            
             if (cantidad <= 0) $(this).find('input[type="number"]').val("1");
-        
             if (isNaN(cantidad)) cantidad = 0;
-        
+            
+            $(this).find('.subtotal').text((cantidad * precio).toLocaleString('es-MX', { minimumFractionDigits: 2 }));
+            
             var subtotal = cantidad * precio;
             total += subtotal;
         
@@ -130,14 +132,25 @@ $(document).ready(function() {
             }
         
             var nuevo_stock = old_stock - cantidad;
+
+            // Si el stock supera el limite de existencias, mostrar un mensaje de error
+            if (nuevo_stock < 0) {
+                Swal.fire({
+                    icon: "error",
+                    title: "No hay suficientes existencias",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                nuevo_stock = 0;
+                $(this).find('input[type="number"]').val(old_stock);
+            }
         
             // Actualizar el stock visualmente en la tabla
             stockCell.text(nuevo_stock);
         });
 
-		total = total.toFixed(2);
-        $('#total-pagar').text(total);
-        $('#total').val("$ " + total);
+        $('#total-pagar').text(total.toLocaleString('es-MX', { minimumFractionDigits: 2 }));
+        $('#total').text(total.toLocaleString('es-MX', { minimumFractionDigits: 2 }));
         habilitar_venta();
 
 		return total;
@@ -154,17 +167,26 @@ $(document).ready(function() {
         }
     });
 
-    // Cambiar el total de cambio cuando se modifica el pago
-    $("#pago").on("keyup", function() {
-        var pago = parseFloat($(this).val());
-        var total = parseFloat($('#total-pagar').text());
+    // Función para calcular y actualizar el cambio
+    function calcularCambio() {
+        var pago = parseFloat($("#pago").val());
+        var total = parseFloat($('#total-pagar').text().replace(/,/g, ''));
         var cambio = pago - total;
         if (cambio < 0) cambio = 0;
-        $('#cambio').val("$ " + cambio.toFixed(2));
+        $('#cambio').text(cambio.toLocaleString('es-MX', { minimumFractionDigits: 2 }));
+    }
+
+    // Llamar a la función cuando se modifica el dinero recibido
+    $("#pago").on("keyup", function() {
+        calcularCambio();
     });
 
-     // Funcion para limpiar el formulario
-     function resetForm() {
+    $("#btn-confirm").on("click", function() {
+        calcularCambio();
+    });
+
+    // Funcion para limpiar el formulario
+    function resetForm() {
         $("#descripcion_venta").val("");
         $("#pago").val("");
         $("#cambio").val("");
@@ -185,7 +207,7 @@ $(document).ready(function() {
         $('#tbl-productos tr').each(function () {
             var id = $(this).data('id');
             var cantidad = parseInt($(this).find('input[type="number"]').val());
-            var precio = parseFloat($(this).find('td:eq(1)').text().replace('$', ''));
+            var precio = parseFloat($(this).find('.precio').text().replace(/,/g, ''));
             dataToSend.push({ precio: precio, id: id, cantidad: cantidad });
         });
 
