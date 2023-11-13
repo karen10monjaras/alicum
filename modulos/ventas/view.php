@@ -7,7 +7,7 @@
                     <div class="card-header">
                         <h2 class="text-center">Venta</h2>
                         <div class="form-outline">
-                            <input type="search" name="key" id="key" class="form-control" placeholder="Buscar por producto por nombre" aria-label="Search" />
+                            <input type="search" name="key" id="key" class="form-control" placeholder="Buscar producto por nombre" aria-label="Search" />
                         </div>
                         <div id="suggestions"></div>
                         <div class="col-md-4 float-right d-flex align-items-center">
@@ -26,6 +26,7 @@
                                         <th>Precio C/Unidad</th>
                                         <th>En almácen</th>
                                         <th>Cantidad</th>
+                                        <th>Subtotal</th>
                                         <th>Remover</th>
                                     </tr>
                                 </thead>

@@ -1,13 +1,9 @@
 <?php 
 session_start(); 
-
-if (!isset($_SESSION['id_usuario'])) {
-    header("Location: login.php");
-}
+if (!isset($_SESSION['id_usuario'])) header("Location: login.php");
 ?>
 <!DOCTYPE html>
-<html>
-<!-- <html lang="en"> -->
+<html lang="en">
 <head>
     <title>Alicum</title>
     <meta charset="utf-8">
@@ -57,23 +53,23 @@ if (!isset($_SESSION['id_usuario'])) {
 
 	<style>
 		#suggestions {
-		box-shadow: 2px 2px 8px 0 rgba(0,0,0,.2);
-		height: auto;
-		position: absolute;
-		top: 110px;
-		z-index: 9999;
-		width: auto;
-		max-height: 250px;
-		overflow-y: auto;
+			box-shadow: 2px 2px 8px 0 rgba(0,0,0,.2);
+			height: auto;
+			position: absolute;
+			top: 110px;
+			z-index: 9999;
+			width: auto;
+			max-height: 250px;
+			overflow-y: auto;
 		}
 		
 		#suggestions .suggest-element {
-		background-color: #EEEEEE;
-		border-top: 1px solid #d6d4d4;
-		cursor: pointer;
-		padding: 8px;
-		width: 100%;
-		float: left;
+			background-color: #EEEEEE;
+			border-top: 1px solid #d6d4d4;
+			cursor: pointer;
+			padding: 8px;
+			width: 100%;
+			float: left;
 		}
 	</style>
 </head>
