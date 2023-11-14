@@ -1,12 +1,18 @@
 # **IMPORTANTE**
 
-**Actualizacion 13/11/2023**
+**Actualizacion 14/11/2023**
 
-Cambios:
+Cambios en la BD:
 
-1. Ya se implementó el uso de , cuando en las cifras de dinero mayor a 1000.
+1. Tabla compras: Se cambio a float la columna precio_compra
 
-2. Elimine algunas carpetas de plugins que no se estaban ocupando.
+2. Tabla transaccion_compras: Se cambio a float la columna total_compras
+
+3. Tabla ventas: Se cambio a float la columna precio_venta
+
+4. Tabla transaccion_ventas: Se cambio a float la columna total_ventas
+
+### Una enorme disculpa, tarde un poco en subir los cambios porque ayer estuve ocupado hasta tarde.
 
 ---
 

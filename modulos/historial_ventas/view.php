@@ -17,7 +17,7 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <!-- Llenado dinámico -->
+                    <!-- Llenado dinámico -->
                   </tbody>
                 </table>
               </div>
@@ -37,29 +37,24 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLiveLabel">Detalles de venta con número de nota: <span class="text-right" id="nota_venta"></span></h5>
+						<h5 class="modal-title" id="exampleModalLiveLabel">Nota de venta: <span class="text-right" id="nota_venta"></span></h5>
 						<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body row">
-						
-            <div class="col-md-6">
-              <span>Fecha de venta</span>
-              <p id="fecha_venta"></p>
+            <div class="col-md-12">
+              <p class="h6 border-bottom mb-4">Fecha de venta: <span id="fecha_venta"></span></p>
             </div>
             <div class="col-md-6">
-              <span>Cliente</span>
-              <p id="nombre_cliente"></p>
+              <p class="h6 border-bottom mb-4">Atendió: <span id="responsable"></span></p>
             </div>
             <div class="col-md-6">
-              <span>Atendió</span>
-              <p id="responsable"></p>
+              <p class="h6 border-bottom mb-4">Cliente: <span id="nombre_cliente"></span></p>
             </div>
             <div class="col-md-6">
-              <span>Descripción</span>
-              <p id="descripcion_venta"></p>
+              <p class="h6 border-bottom mb-4">Descripción: <span id="descripcion_venta"></span></p>
             </div>
-            <div class='col-md-12'>
-              <table class="table table-sm table-bordered border">
+            <div class='col-md-12' style="overflow-x: auto;">
+              <table class="table table-sm table-bordered border responsive">
                 <thead>
                   <tr>
                     <th>Producto</th>

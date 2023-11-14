@@ -124,8 +124,7 @@ $(document).ready(function() {
             total += subtotal;
         });
 
-		total = total.toFixed(2);
-        $('#total-pagar').text(total);
+        $('#total-pagar').text(total.toLocaleString('es-MX', { minimumFractionDigits: 2 }));
         habilitar_compra();
 
 		return total;
@@ -137,8 +136,8 @@ $(document).ready(function() {
 
         $('#tbl-productos tr').each(function () {
             var id = $(this).data('id');
-            var cantidad = parseInt($(this).find('.cantidad').val());
-            var precio = parseInt($(this).find('.precio').val());
+            var cantidad = parseFloat($(this).find('.cantidad').val());
+            var precio = parseFloat($(this).find('.precio').val());
             dataToSend.push({ precio: precio, id: id, cantidad: cantidad });
         });
 

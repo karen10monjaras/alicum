@@ -171,8 +171,10 @@ $(document).ready(function() {
     function calcularCambio() {
         var pago = parseFloat($("#pago").val());
         var total = parseFloat($('#total-pagar').text().replace(/,/g, ''));
+        if (isNaN(pago)) pago = 0;
         var cambio = pago - total;
-        if (cambio < 0) cambio = 0;
+        if (isNaN(cambio) || cambio < 0) cambio = 0; 
+        // if (cambio < 0) cambio = 0;
         $('#cambio').text(cambio.toLocaleString('es-MX', { minimumFractionDigits: 2 }));
     }
 
@@ -206,7 +208,7 @@ $(document).ready(function() {
 
         $('#tbl-productos tr').each(function () {
             var id = $(this).data('id');
-            var cantidad = parseInt($(this).find('input[type="number"]').val());
+            var cantidad = parseFloat($(this).find('input[type="number"]').val());
             var precio = parseFloat($(this).find('.precio').text().replace(/,/g, ''));
             dataToSend.push({ precio: precio, id: id, cantidad: cantidad });
         });

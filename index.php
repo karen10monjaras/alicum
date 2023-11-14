@@ -71,6 +71,38 @@ if (!isset($_SESSION['id_usuario'])) header("Location: login.php");
 			width: 100%;
 			float: left;
 		}
+
+		/* Estilos personalizados para pantallas pequeñas (responsive) */
+		@media only screen and (max-width: 1200px) {
+			/* Establece un ancho máximo para el campo de búsqueda en pantallas pequeñas */
+			.dataTables_filter input {
+			max-width: 150px;
+			}
+		
+			/* Ajusta el tamaño de los botones de DataTables en pantallas pequeñas */
+			.dt-buttons {
+				margin-bottom: 10px; /* Espaciado opcional entre los botones */
+			}
+		
+			.dt-buttons button {
+				font-size: 14px; /* Tamaño de fuente ajustado para pantallas pequeñas */
+				padding: 5px 8px; /* Ajusta el relleno del botón */
+			}
+		
+			/* Ajusta el tamaño de los botones de paginación en pantallas pequeñas */
+			.dataTables_paginate .paginate_button {
+				font-size: 12px; /* Tamaño de fuente ajustado para pantallas pequeñas */
+			}
+		
+			/* Ajusta el tamaño del texto "Mostrando X a Y de Z entradas" en pantallas pequeñas */
+			.dataTables_info {
+				font-size: 14px; /* Tamaño de fuente ajustado para pantallas pequeñas */
+			}
+		
+			.dataTables_paginate ul {
+			overflow-x: auto;
+			}
+		}
 	</style>
 </head>
 

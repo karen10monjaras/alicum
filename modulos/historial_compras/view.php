@@ -37,7 +37,7 @@
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLiveLabel">Detalles de compra con número de nota: <span class="text-right" id="nota_compra"></span></h5>
+						<h5 class="modal-title" id="exampleModalLiveLabel">Nota de compra: <span class="text-right" id="nota_compra"></span></h5>
 						<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body row">
@@ -57,7 +57,7 @@
               <span>Descripción</span>
               <p id="descripcion_compra"></p>
             </div>
-            <div class='col-md-12'>
+            <div class='col-md-12' style="overflow-x: auto;">
               <table class="table table-sm table-bordered border">
                 <thead>
                   <tr>
