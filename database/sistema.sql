@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-11-2023 a las 18:37:21
+-- Tiempo de generación: 17-11-2023 a las 20:08:08
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.3.13
 
@@ -32,21 +32,24 @@ CREATE TABLE `almacen` (
   `id_producto` int(11) NOT NULL,
   `nombre_producto` text NOT NULL,
   `precio_producto` float NOT NULL,
-  `stock` int(11) NOT NULL
+  `stock` int(11) NOT NULL,
+  `categoria_producto` enum('producto','alimento_fabricado') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `almacen`
 --
 
-INSERT INTO `almacen` (`id_producto`, `nombre_producto`, `precio_producto`, `stock`) VALUES
-(1, 'Alimento de cerdo 40kg', 400, 29),
-(2, 'Alimento de pollo 1kg', 20, 105),
-(5, 'Alimento de pollo 5kg', 66, 10),
-(6, 'Jabón Asuntol', 40, 133),
-(7, 'Pollinaza', 2.1, 992988),
-(8, 'Maiz Entero / Molido', 6.4, 1997000),
-(9, 'Melaza', 5.5, 45);
+INSERT INTO `almacen` (`id_producto`, `nombre_producto`, `precio_producto`, `stock`, `categoria_producto`) VALUES
+(1, 'Alimento de cerdo 40kg', 400, 30, 'alimento_fabricado'),
+(2, 'Alimento de pollo 1kg', 20, 105, 'producto'),
+(5, 'Alimento de pollo 5kg', 66, 10, 'producto'),
+(6, 'Jabón Asuntol', 40, 133, 'producto'),
+(10, 'Alimento de pollo 20kg', 70, 0, 'alimento_fabricado'),
+(11, 'Alimento de pollo 5kg', 25, 0, 'alimento_fabricado'),
+(13, 'Material primario 1', 10, 200, 'producto'),
+(14, 'Material primario 2', 20, 300, 'producto'),
+(15, 'Material primario 3', 30, 400, 'producto');
 
 -- --------------------------------------------------------
 
@@ -88,20 +91,36 @@ CREATE TABLE `compras` (
 --
 
 INSERT INTO `compras` (`id_compra`, `id_transaccion`, `id_producto`, `cantidad_producto`, `precio_compra`) VALUES
-(9, 6, 2, 1, 0),
-(10, 7, 1, 1, 0),
-(11, 7, 2, 1, 0),
-(12, 8, 1, 1, 0),
-(13, 8, 2, 1, 0),
-(15, 10, 1, 15, 420),
 (17, 11, 1, 20, 410),
 (18, 11, 2, 100, 20),
 (19, 12, 5, 20, 68),
 (21, 14, 6, 25, 42),
-(22, 15, 9, 100, 5),
-(23, 15, 8, 2000000, 6),
-(24, 15, 7, 1000000, 2),
-(25, 16, 6, 100, 42);
+(30, 20, 13, 200, 12),
+(31, 20, 14, 300, 22),
+(32, 20, 15, 400, 32);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `formulas`
+--
+
+CREATE TABLE `formulas` (
+  `id_formula` int(11) NOT NULL,
+  `id_transaccion` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL,
+  `cantidad_producto` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `formulas`
+--
+
+INSERT INTO `formulas` (`id_formula`, `id_transaccion`, `id_producto`, `cantidad_producto`) VALUES
+(28, 19, 13, 50),
+(29, 19, 14, 25),
+(30, 20, 14, 10),
+(31, 20, 15, 20);
 
 -- --------------------------------------------------------
 
@@ -145,16 +164,29 @@ CREATE TABLE `transaccion_compras` (
 --
 
 INSERT INTO `transaccion_compras` (`id_transaccion`, `fecha_compra`, `id_proveedor`, `id_usuario`, `total_compra`, `descripcion_compra`) VALUES
-(6, '2023-11-12 06:03:57', 1, 1, 20, ''),
-(7, '2023-11-12 06:22:31', 1, 1, 420, ''),
-(8, '2023-11-12 06:29:03', 1, 1, 420, ''),
-(9, '2023-11-12 11:25:40', 1, 1, 480, ''),
-(10, '2023-11-12 12:40:24', 1, 1, 6900, ''),
 (11, '2023-11-12 15:27:43', 1, 1, 10200, 'Pagado en efectivo'),
 (12, '2023-11-12 15:39:23', 3, 1, 1360, ''),
 (14, '2023-11-12 17:47:57', 4, 1, 1050, ''),
-(15, '2023-11-13 06:22:58', 3, 1, 14000500, ''),
-(16, '2023-11-13 06:45:20', 4, 1, 4250, '');
+(20, '2023-11-17 19:00:47', 3, 1, 21800, '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `transaccion_formulas`
+--
+
+CREATE TABLE `transaccion_formulas` (
+  `id_transaccion` int(11) NOT NULL,
+  `id_producto` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `transaccion_formulas`
+--
+
+INSERT INTO `transaccion_formulas` (`id_transaccion`, `id_producto`) VALUES
+(19, 1),
+(20, 10);
 
 -- --------------------------------------------------------
 
@@ -180,20 +212,13 @@ INSERT INTO `transaccion_ventas` (`id_transaccion`, `fecha_venta`, `id_cliente`,
 (6, '2023-11-10 15:36:14', 1, 1, 4200, 'Efectivo'),
 (7, '2023-11-12 17:04:21', 1, 1, 132, 'Efectivo'),
 (8, '2023-11-12 17:05:05', 1, 1, 400, 'Efectivo'),
-(12, '2023-11-12 17:53:27', 1, 1, 0, ''),
 (13, '2023-11-12 17:59:22', 1, 1, 40, ''),
 (14, '2023-11-12 18:01:14', 1, 1, 1086, 'Pago en efectivo'),
 (15, '2023-11-12 18:43:24', 1, 1, 798, 'Pago en Efectivo'),
 (16, '2023-11-13 04:53:32', 1, 1, 1200, ''),
 (19, '2023-11-13 05:21:54', 1, 1, 3600, 'Pagado en efectivo'),
 (20, '2023-11-13 05:39:38', 1, 1, 2480, 'Efectivo'),
-(21, '2023-11-13 06:12:05', 1, 1, 2764, 'Pagado en efectivo'),
-(22, '2023-11-13 06:25:00', 1, 1, 10627.5, ''),
-(24, '2023-11-13 06:42:40', 1, 1, 2100, '-'),
-(25, '2023-11-13 06:44:01', 1, 1, 2100, 'Efectivo'),
-(26, '2023-11-13 08:13:25', 1, 1, 2100, 'Efectivo'),
-(27, '2023-11-13 08:15:47', 1, 1, 10875, 'Pagado 11000, total 10,875.00, cambio 125.00'),
-(28, '2023-11-13 08:21:16', 1, 1, 25.2, 'Efectivo');
+(21, '2023-11-13 06:12:05', 1, 1, 2764, 'Pagado en efectivo');
 
 -- --------------------------------------------------------
 
@@ -257,17 +282,7 @@ INSERT INTO `ventas` (`id_venta`, `id_transaccion`, `id_producto`, `cantidad_pro
 (28, 21, 1, 2, 1200),
 (29, 21, 2, 3, 20),
 (30, 21, 5, 4, 66),
-(31, 21, 6, 1, 40),
-(32, 22, 9, 5, 6),
-(33, 22, 8, 1000, 6),
-(34, 22, 7, 2000, 2),
-(36, 24, 7, 1000, 2),
-(37, 25, 7, 1000, 2.1),
-(38, 26, 7, 1000, 2.1),
-(39, 27, 8, 1000, 6.4),
-(40, 27, 7, 2000, 2.1),
-(41, 27, 9, 50, 5.5),
-(42, 28, 7, 12, 2.1);
+(31, 21, 6, 1, 40);
 
 --
 -- Índices para tablas volcadas
@@ -294,6 +309,14 @@ ALTER TABLE `compras`
   ADD KEY `id_producto` (`id_producto`);
 
 --
+-- Indices de la tabla `formulas`
+--
+ALTER TABLE `formulas`
+  ADD PRIMARY KEY (`id_formula`),
+  ADD KEY `id_transaccion` (`id_transaccion`),
+  ADD KEY `id_producto` (`id_producto`);
+
+--
 -- Indices de la tabla `proveedores`
 --
 ALTER TABLE `proveedores`
@@ -306,6 +329,13 @@ ALTER TABLE `transaccion_compras`
   ADD PRIMARY KEY (`id_transaccion`),
   ADD KEY `id_proveedor` (`id_proveedor`),
   ADD KEY `id_usuario` (`id_usuario`);
+
+--
+-- Indices de la tabla `transaccion_formulas`
+--
+ALTER TABLE `transaccion_formulas`
+  ADD PRIMARY KEY (`id_transaccion`),
+  ADD KEY `id_producto` (`id_producto`);
 
 --
 -- Indices de la tabla `transaccion_ventas`
@@ -337,7 +367,7 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `almacen`
 --
 ALTER TABLE `almacen`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
@@ -349,7 +379,13 @@ ALTER TABLE `clientes`
 -- AUTO_INCREMENT de la tabla `compras`
 --
 ALTER TABLE `compras`
-  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_compra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT de la tabla `formulas`
+--
+ALTER TABLE `formulas`
+  MODIFY `id_formula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
@@ -361,13 +397,19 @@ ALTER TABLE `proveedores`
 -- AUTO_INCREMENT de la tabla `transaccion_compras`
 --
 ALTER TABLE `transaccion_compras`
-  MODIFY `id_transaccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_transaccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de la tabla `transaccion_formulas`
+--
+ALTER TABLE `transaccion_formulas`
+  MODIFY `id_transaccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `transaccion_ventas`
 --
 ALTER TABLE `transaccion_ventas`
-  MODIFY `id_transaccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id_transaccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -379,7 +421,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- Restricciones para tablas volcadas
@@ -393,11 +435,24 @@ ALTER TABLE `compras`
   ADD CONSTRAINT `compras_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `almacen` (`id_producto`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `formulas`
+--
+ALTER TABLE `formulas`
+  ADD CONSTRAINT `formulas_ibfk_1` FOREIGN KEY (`id_transaccion`) REFERENCES `transaccion_formulas` (`id_transaccion`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `formulas_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `almacen` (`id_producto`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `transaccion_compras`
 --
 ALTER TABLE `transaccion_compras`
   ADD CONSTRAINT `transaccion_compras_ibfk_1` FOREIGN KEY (`id_proveedor`) REFERENCES `proveedores` (`id_proveedor`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `transaccion_compras_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `transaccion_formulas`
+--
+ALTER TABLE `transaccion_formulas`
+  ADD CONSTRAINT `transaccion_formulas_ibfk_1` FOREIGN KEY (`id_producto`) REFERENCES `almacen` (`id_producto`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `transaccion_ventas`

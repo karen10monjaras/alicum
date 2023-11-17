@@ -1,5 +1,23 @@
 # **IMPORTANTE**
 
+**Actualizacion 17/11/2023**
+
+**Cambios en la BD:**
+
+Se agregaron las siguientes tablas:
+
+1. Tabla **_transaccion\_formulas_**
+
+2. Tabla **_formulas_**
+
+Se añadió el campo **_categoria\_producto_** a la tabla **_almacen_**
+
+## PENDIENTE
+
+Falta agregar la opción para crear "n" cantidad de alimento en base a las fórmulas.
+
+---
+
 **Actualizacion 14/11/2023**
 
 Cambios en la BD:

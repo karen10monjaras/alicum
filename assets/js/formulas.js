@@ -37,18 +37,18 @@ $(document).ready(function () {
       dataSrc: "",
     },
     columns: [
-      { data: "id_transaccion" },
+      { data: "id_producto" },
       { data: "nombre_producto" },
       {
-        data: "id_transaccion",
+        data: "id_producto",
         render: function (data, type) {
           if (type === "display") {
             template = `
-            <button type='button' id='${data}' class='btn btn-sm btn-success btn-view' data-toggle='modal' data-target='#exampleModalLive'>
-              <i class='fas fa-edit'></i>
+            <button type='button' id='${data}' class='btn btn-sm btn-primary btn-add' data-toggle='modal' data-target='#exampleModalLive'>
+              <i class='fas fa-plus'></i>
             </button>
-            <button id='${data}' class='btn btn-sm btn-danger btn-delete'>
-              <i class='fas fa-trash'></i>
+            <button id='${data}' class='btn btn-sm btn-success btn-edit' data-toggle='modal' data-target='#exampleModalLive2'>
+              <i class='fas fa-edit'></i>
             </button>`;
           }
           return template;
@@ -76,107 +76,202 @@ $(document).ready(function () {
     },
   });
 
-  // Mostrar transaccion
-  $(document).on("click", ".btn-view", function () {
-    var transaction_id = $(this).attr("id");
-    $("#lista_productos").html("");
+  id_productos_primarios = [];
+
+  $("#key").on("keyup", function () {
+    var key = $(this).val();
+    var dataString = "key=" + key;
+
+    $.ajax({
+      type: "POST",
+      url: "modulos/formulas/search.php",
+      data: dataString,
+      success: function (response) {
+        $("#suggestions").fadeIn(100).html(response);
+        $(".suggest-element").on("click", function () {
+          var id = $(this).attr("id");
+          var existencias = $(this).attr("stock");
+          var producto = $(this).text();
+
+          var existingRow = $('#tbl-productos tr[data-id="' + id + '"]');
+          if (existingRow.length > 0) {
+            var cantidadInput = existingRow.find('input[type="number"]');
+            var cantidad = parseInt(cantidadInput.val());
+            cantidadInput.val(cantidad + 1);
+          } else {
+            template = `
+                <tr data-id="${id}">
+                    <td>${producto}</td>
+                    <td old_stock='${existencias}'>${existencias}</td>
+                    <td>
+                        <div class="form-outline">
+                            <input type="number" class="form-control" value="1"/>
+                        </div>
+                    </td>
+                    <td>
+                      <button id="${id}" class="btn btn-sm btn-outline-danger delete-product" data-id="${id}">
+                        <i class="fa fas fa-trash"></i>
+                      </button>
+					          </td>
+                </tr>`;
+            $("#tbl-productos").append(template);
+          }
+          id_productos_primarios.push(id);
+
+          refrescarStock();
+          $("#suggestions").fadeOut(100);
+          $("#key").val("");
+          return false;
+        });
+      },
+    });
+  });
+
+  // Actualizar total a pagar cuando se modifica la cantidad de producto
+  $("#tbl-productos").on("keyup", "input[type='number']", refrescarStock);
+  $("#tbl-productos").on("change", "input[type='number']", refrescarStock);
+
+  // Manejador de eventos para eliminar productos
+  $("#tbl-productos").on("click", ".delete-product", function () {
+    var id = $(this).data("id");
+
+    // Eliminar el producto de la tabla
+    $(this).closest("tr").remove();
+
+    // Eliminar el producto del arreglo
+    var index = id_productos_primarios.indexOf(id);
+    if (index !== -1) {
+      id_productos_primarios.splice(index, 1);
+    }
+
+    refrescarStock();
+  });
+
+  function refrescarStock() {
+    $("#tbl-productos tr").each(function () {
+      var cantidad = parseInt($(this).find('input[type="number"]').val());
+      var stockCell = $(this).find("td:eq(1)");
+      var old_stock = parseInt(stockCell.attr("old_stock"));
+      var stock = parseInt(stockCell.text());
+
+      if (cantidad <= 0) $(this).find('input[type="number"]').val("1");
+      if (isNaN(cantidad)) cantidad = 0;
+
+      // Asegurarse de que el stock original esté guardado en la primera iteración
+      if (isNaN(old_stock)) {
+        stockCell.attr("old_stock", stock);
+        old_stock = stock;
+      }
+
+      var nuevo_stock = old_stock - cantidad;
+
+      // Si el stock supera el limite de existencias, mostrar un mensaje de error
+      if (nuevo_stock < 0) {
+        Swal.fire({
+          icon: "error",
+          title: "No hay suficientes existencias",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        nuevo_stock = 0;
+        $(this).find('input[type="number"]').val(old_stock);
+      }
+
+      // Actualizar el stock visualmente en la tabla
+      stockCell.text(nuevo_stock);
+    });
+  }
+
+  $("#tbl-productos tr").on("change", 'input[type="number"]', function () {
+    var cantidad = parseInt($(this).val());
+    var stockCell = $(this).closest("tr").find("td:eq(2)");
+    var old_stock = parseInt(stockCell.attr("old_stock"));
+
+    if (!isNaN(old_stock)) {
+      // Restaurar el stock original visualmente si la cantidad se reduce
+      stockCell.text(old_stock - cantidad);
+    }
+  });
+
+  // Funcion para limpiar el formulario
+  function resetForm() {
+    $("#key").val("");
+    $("#tbl-productos").empty();
+    id_productos_primarios = [];
+  }
+
+  $(document).on("click", ".btn-edit", function () {
+    id_producto = $(this).attr("id");
+    $("#tbl-productos").empty();
 
     $.ajax({
       url: "modulos/formulas/model.php",
       method: "POST",
       data: {
-        transaction_id,
+        edit_id: id_producto,
       },
       success: function (response) {
+        // console.log(response); return;
         let data = JSON.parse(response);
+        if (data.length == 0) return;
 
-        $("#nota_venta").text(data.transaccion_data[0].id_transaccion);
-        $("#fecha_venta").text(data.transaccion_data[0].fecha_venta);
-        $("#nombre_cliente").text(data.transaccion_data[0].nombre_cliente);
-        $("#responsable").text(data.transaccion_data[0].nombre_usuario);
-        $("#descripcion_venta").text(
-          data.transaccion_data[0].descripcion_venta
-        );
-
-        var productosData = data.productos_data;
-        var listaProductos = $("#lista_productos");
-
-        $.each(productosData, function (index, producto) {
-          var nombre_producto = producto.nombre_producto;
-          var cantidad_producto = parseFloat(
-            producto.cantidad_producto
-          ).toLocaleString("es-MX", { minimumFractionDigits: 2 });
-          var precio_venta = parseFloat(producto.precio_venta).toLocaleString(
-            "es-MX",
-            { minimumFractionDigits: 2 }
-          );
-          var calculo =
-            parseFloat(cantidad_producto.replace(/,/g, "")) *
-            parseFloat(precio_venta.replace(/,/g, ""));
-          var subtotal_venta = calculo.toLocaleString("es-MX", {
-            minimumFractionDigits: 2,
+        // Iterar sobre los datos y agregar filas a la tabla
+        $.each(data, function(index, item) {
+          $.each(item.extra, function(extraIndex, extraItem) {
+            var template = `
+              <tr data-id="${item.id_producto}">
+                <td>${extraItem.nombre_producto}</td>
+                <td old_stock='${extraItem.stock}'>${extraItem.stock}</td>
+                <td>
+                  <div class="form-outline">
+                    <input type="number" class="form-control" value="${item.cantidad_producto}"/>
+                  </div>
+                </td>
+                <td>
+                  <button id="${item.id_producto}" class="btn btn-sm btn-outline-danger delete-product" data-id="${item.id_producto}">
+                    <i class="fa fas fa-trash"></i>
+                  </button>
+                </td>
+              </tr>`;
+            $("#tbl-productos").append(template);
           });
-          var tbody = ``;
-
-          tbody += `
-          <tr>
-            <td>${nombre_producto}</td>
-            <td class="text-right">${cantidad_producto}</td>
-            <td class="text-right">${precio_venta}</td>
-            <td class="text-right">${subtotal_venta}</td>
-          </tr>`;
-
-          listaProductos.append(tbody);
         });
-        // Añadir el total de la compra
-        tbody = `
-        <tr>
-          <td></td>
-          <td></td>
-          <td class="text-right"><b>Total</b></td>
-          <td class="text-right"><b>$ ${parseFloat(
-            data.transaccion_data[0].total_venta
-          ).toLocaleString("es-MX", { minimumFractionDigits: 2 })}</b></td>
-        </tr>`;
-
-        listaProductos.append(tbody);
       },
     });
   });
 
-  // Eliminar registro
-  $(document).on("click", ".btn-delete", function () {
-    var delete_id = $(this).attr("id");
+  // Enviar los datos al servidor cuando se hace click en el boton de vender
+  $("#btn-save").click(function () {
+    var dataToSend = [];
 
-    Swal.fire({
-      title: `¿Seguro que desea eliminar el registro ${delete_id}?`,
-      icon: "error",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Si, continuar!",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        $.ajax({
-          url: "modulos/formulas/model.php",
-          method: "POST",
-          data: {
-            delete_id,
-          },
-          success: function (response) {
-            Swal.fire({
-              icon: "success",
-              title: response,
-              showConfirmButton: false,
-              timer: 600,
-            });
-          },
-          complete: function () {
-            table.ajax.reload();
-          },
+    $("#tbl-productos tr").each(function () {
+      var id = $(this).data("id");
+      var cantidad = parseFloat($(this).find('input[type="number"]').val());
+      dataToSend.push({ id: id, cantidad: cantidad });
+    });
+
+    dataToSend.push({ id_producto: id_producto });
+
+    // Enviar los datos al servidor como un objeto JSON
+    $.ajax({
+      type: "POST",
+      url: "modulos/formulas/model.php",
+      data: {
+        guardar_formula: true,
+        productos: JSON.stringify(dataToSend),
+      },
+      success: function (response) {
+        // console.log(response)
+        Swal.fire({
+          icon: "success",
+          title: "Formula actualizada",
+          showConfirmButton: false,
+          timer: 1500,
         });
-      }
+      },
+      complete: function () {
+        resetForm();
+      },
     });
   });
 });
