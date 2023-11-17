@@ -5,13 +5,14 @@ $modules = [
     "compras" => "modulos/compras/view.php",
     "historial_compras" => "modulos/historial_compras/view.php",
     "almacen" => "modulos/almacen/view.php",
+    "formulas" => "modulos/formulas/view.php",
     "clientes" => "modulos/clientes/view.php",
     "proveedores" => "modulos/proveedores/view.php",
     "usuarios" => "modulos/usuarios/view.php"
 ];
 
 if (empty($_GET) || !isset($_GET['modulo'])) {
-    $module = "inicio";
+    $module = "ventas";
 } else { 
     $module = $_GET['modulo'];
 }

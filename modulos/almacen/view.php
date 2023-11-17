@@ -2,6 +2,7 @@
     <section class="content">
       <div class="container-fluid">
         <div class="row">
+          <h2 class="mb-3">Almacén primario</h2>
           <div class="col-md-12">
             <div class="card">
               <div class="card-body">
@@ -53,6 +54,13 @@
                 <div class='form-group col-md-6'>
                   <label for='precio_producto'>Precio de venta (C/U)</label>
                   <input type='number' class='form-control' id='precio_producto' name='precio_producto' required>
+                </div>
+                <div class='form-group col-md-6'>
+                  <label for='precio_producto'>Categoría</label>
+                  <select class='form-select' id='categoria_producto' name='categoria_producto'>
+                    <option value='producto'>Producto</option>
+                    <option value='alimento_fabricado'>Alimento fábricado</option>
+                  </select>
                 </div>
               </div>
               <!-- /.card-body -->

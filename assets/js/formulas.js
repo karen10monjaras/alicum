@@ -33,44 +33,18 @@ $(document).ready(function () {
       },
     ],
     ajax: {
-      url: "modulos/almacen/table.php",
+      url: "modulos/formulas/table.php",
       dataSrc: "",
     },
     columns: [
-      { data: "id_producto" },
+      { data: "id_transaccion" },
       { data: "nombre_producto" },
       {
-        data: "precio_producto",
-        render: function (data, type) {
-          if (type === "display") {
-            template =
-              `` +
-              parseFloat(data).toLocaleString("es-MX", {
-                minimumFractionDigits: 2,
-              });
-          }
-          return template;
-        },
-      },
-      {
-        data: "stock",
-        render: function (data, type) {
-          if (type === "display") {
-            template =
-              `` +
-              parseFloat(data).toLocaleString("es-MX", {
-                minimumFractionDigits: 2,
-              });
-          }
-          return template;
-        },
-      },
-      {
-        data: "id_producto",
+        data: "id_transaccion",
         render: function (data, type) {
           if (type === "display") {
             template = `
-            <button type='button' id='${data}' class='btn btn-sm btn-success btn-edit' data-toggle='modal' data-target='#exampleModalLive'>
+            <button type='button' id='${data}' class='btn btn-sm btn-success btn-view' data-toggle='modal' data-target='#exampleModalLive'>
               <i class='fas fa-edit'></i>
             </button>
             <button id='${data}' class='btn btn-sm btn-danger btn-delete'>
@@ -102,65 +76,70 @@ $(document).ready(function () {
     },
   });
 
-  $("form").submit(function (e) {
-    e.preventDefault();
-  });
-
-  // Reiniciar formulario
-  function resetForm() {
-    $("#id_producto").val("");
-    $("#nombre_producto").val("");
-    $("#precio_producto").val("");
-    $("#categoria_producto").val("producto");
-    $(".btn-continue").attr("act", "insertar");
-  }
-
-  // Reiniciar formulario al abrir modal
-  $(".btn-new").click(function () {
-    resetForm();
-  });
-
-  // Mostrar datos a actualizar
-  $(document).on("click", ".btn-continue", function () {
-    let action = $(this).attr("act");
-
-    let formData = new FormData(document.querySelector("form"));
-    formData.append("action", action);
+  // Mostrar transaccion
+  $(document).on("click", ".btn-view", function () {
+    var transaction_id = $(this).attr("id");
+    $("#lista_productos").html("");
 
     $.ajax({
-      url: "modulos/almacen/model.php",
-      method: "POST",
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function (response) {
-        console.log(response);
-      },
-      complete: function () {
-        resetForm();
-        table.ajax.reload();
-      },
-    });
-  });
-
-  // Mostrar datos a actualizar
-  $(document).on("click", ".btn-edit", function () {
-    var edit_id = $(this).attr("id");
-
-    $.ajax({
-      url: "modulos/almacen/model.php",
+      url: "modulos/formulas/model.php",
       method: "POST",
       data: {
-        edit_id,
+        transaction_id,
       },
       success: function (response) {
         let data = JSON.parse(response);
 
-        $("#id_producto").val(data[0].id_producto);
-        $("#nombre_producto").val(data[0].nombre_producto);
-        $("#precio_producto").val(data[0].precio_producto);
-        $("#categoria_producto").val(data[0].categoria_producto);
-        $(".btn-continue").attr("act", "actualizar");
+        $("#nota_venta").text(data.transaccion_data[0].id_transaccion);
+        $("#fecha_venta").text(data.transaccion_data[0].fecha_venta);
+        $("#nombre_cliente").text(data.transaccion_data[0].nombre_cliente);
+        $("#responsable").text(data.transaccion_data[0].nombre_usuario);
+        $("#descripcion_venta").text(
+          data.transaccion_data[0].descripcion_venta
+        );
+
+        var productosData = data.productos_data;
+        var listaProductos = $("#lista_productos");
+
+        $.each(productosData, function (index, producto) {
+          var nombre_producto = producto.nombre_producto;
+          var cantidad_producto = parseFloat(
+            producto.cantidad_producto
+          ).toLocaleString("es-MX", { minimumFractionDigits: 2 });
+          var precio_venta = parseFloat(producto.precio_venta).toLocaleString(
+            "es-MX",
+            { minimumFractionDigits: 2 }
+          );
+          var calculo =
+            parseFloat(cantidad_producto.replace(/,/g, "")) *
+            parseFloat(precio_venta.replace(/,/g, ""));
+          var subtotal_venta = calculo.toLocaleString("es-MX", {
+            minimumFractionDigits: 2,
+          });
+          var tbody = ``;
+
+          tbody += `
+          <tr>
+            <td>${nombre_producto}</td>
+            <td class="text-right">${cantidad_producto}</td>
+            <td class="text-right">${precio_venta}</td>
+            <td class="text-right">${subtotal_venta}</td>
+          </tr>`;
+
+          listaProductos.append(tbody);
+        });
+        // Añadir el total de la compra
+        tbody = `
+        <tr>
+          <td></td>
+          <td></td>
+          <td class="text-right"><b>Total</b></td>
+          <td class="text-right"><b>$ ${parseFloat(
+            data.transaccion_data[0].total_venta
+          ).toLocaleString("es-MX", { minimumFractionDigits: 2 })}</b></td>
+        </tr>`;
+
+        listaProductos.append(tbody);
       },
     });
   });
@@ -180,7 +159,7 @@ $(document).ready(function () {
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
-          url: "modulos/almacen/model.php",
+          url: "modulos/formulas/model.php",
           method: "POST",
           data: {
             delete_id,

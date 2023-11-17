@@ -56,7 +56,7 @@ if (!isset($_SESSION['id_usuario'])) header("Location: login.php");
 			box-shadow: 2px 2px 8px 0 rgba(0,0,0,.2);
 			height: auto;
 			position: absolute;
-			top: 110px;
+			top: 68px;
 			z-index: 9999;
 			width: auto;
 			max-height: 250px;

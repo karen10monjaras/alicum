@@ -5,6 +5,7 @@ $historial_ventas = '';
 $compras = '';
 $historial_compras = '';
 $almacen = '';
+$formulas = '';
 $clientes = '';
 $proveedores = '';
 $usuarios = '';
@@ -21,6 +22,8 @@ if (!empty($_GET) && isset($_GET['modulo'])) {
         $historial_compras = 'active'; break;
       case 'almacen':
         $almacen = 'active'; break;
+	  case 'formulas':
+        $formulas = 'active'; break;
       case 'clientes':
         $clientes = 'active'; break;
 	  case 'proveedores':
@@ -46,7 +49,10 @@ echo "
 			<a href='?modulo=historial_compras' class='pc-link'><span class='pc-micon'><i class='fa fas fa-history'></i></span><span class='pc-mtext'>Historial compras</span></a>
 		</li>
 		<li class='pc-item $almacen'>
-			<a href='?modulo=almacen' class='pc-link'><span class='pc-micon'><i class='fa fas fa-warehouse'></i></span><span class='pc-mtext'>Almacén</span></a>
+			<a href='?modulo=almacen' class='pc-link'><span class='pc-micon'><i class='fa fas fa-warehouse'></i></span><span class='pc-mtext'>Almacén primario</span></a>
+		</li>
+		<li class='pc-item $formulas'>
+			<a href='?modulo=formulas' class='pc-link'><span class='pc-micon'><i class='fa fas fa-pencil-ruler'></i></span><span class='pc-mtext'>Fórmulas alimento</span></a>
 		</li>
     	<li class='pc-item $clientes'>
 			<a href='?modulo=clientes' class='pc-link'><span class='pc-micon'><i class='fa fas fa-address-book'></i></span><span class='pc-mtext'>Clientes</span></a>

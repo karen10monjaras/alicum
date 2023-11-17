@@ -6,8 +6,9 @@ if (isset($_POST['action'])) {
     if ($_POST['action'] == "insertar") {
         $nombre_producto = htmlspecialchars(trim($_POST['nombre_producto']), ENT_QUOTES, 'UTF-8');
         $precio_producto = htmlspecialchars(trim($_POST['precio_producto']), ENT_QUOTES, 'UTF-8');
+        $categoria_producto = htmlspecialchars(trim($_POST['categoria_producto']), ENT_QUOTES, 'UTF-8');
 
-        $query_producto_insert = "INSERT INTO almacen(id_producto, nombre_producto, precio_producto, stock) VALUES(NULL, '$nombre_producto', $precio_producto, 0)";
+        $query_producto_insert = "INSERT INTO almacen(id_producto, nombre_producto, precio_producto, stock, categoria_producto) VALUES(NULL, '$nombre_producto', $precio_producto, 0, '$categoria_producto')";
         $result_producto_insert = mysqli_query($conn, $query_producto_insert);  
 
         if ($result_producto_insert) echo "Registro exitoso";
@@ -16,8 +17,9 @@ if (isset($_POST['action'])) {
         $id_producto = htmlspecialchars(trim($_POST['id_producto']), ENT_QUOTES, 'UTF-8');
         $nombre_producto = htmlspecialchars(trim($_POST['nombre_producto']), ENT_QUOTES, 'UTF-8');
         $precio_producto = htmlspecialchars(trim($_POST['precio_producto']), ENT_QUOTES, 'UTF-8');
+        $categoria_producto = htmlspecialchars(trim($_POST['categoria_producto']), ENT_QUOTES, 'UTF-8');
 
-        $query_producto_update = "UPDATE almacen SET nombre_producto = '$nombre_producto', precio_producto = $precio_producto WHERE id_producto = $id_producto";        
+        $query_producto_update = "UPDATE almacen SET nombre_producto = '$nombre_producto', precio_producto = $precio_producto, categoria_producto = '$categoria_producto' WHERE id_producto = $id_producto";        
         $result_producto_update = mysqli_query($conn, $query_producto_update);  
 
         if ($result_producto_update) echo "Actualización exitosa";

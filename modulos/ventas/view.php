@@ -1,11 +1,11 @@
     <!-- Main content -->
     <section class="content">
         <div class="row">
+          <h2 class="mb-3">Venta</h2>
           <!-- [ stiped-table ] start -->
           <div class="col-xl-12">
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="text-center">Venta</h2>
                         <div class="form-outline">
                             <input type="search" name="key" id="key" class="form-control" placeholder="Buscar producto por nombre" aria-label="Search" />
                         </div>
