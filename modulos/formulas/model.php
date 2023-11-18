@@ -22,6 +22,32 @@ if (isset($_POST['edit_id'])) {
     echo json_encode($row, JSON_UNESCAPED_UNICODE);
 }
 
+if (isset($_POST['preparar_alimento'])) {
+    $data = json_decode($_POST['productos'], true);
+
+    $cantidad_generada = $data[count($data) - 1]['cantidad_generada'];
+    $id_producto = $data[count($data) - 2]['id_producto'];
+
+    // Se hace la actualizacion del stock
+    $query_update_stock = "UPDATE almacen SET stock = stock + $cantidad_generada WHERE id_producto = $id_producto";                
+    $result_update_stock = mysqli_query($conn, $query_update_stock);
+    
+    $limite = count($data) - 2; // Cantidad de productos menos los datos de proveedor y total
+    
+    // Itera sobre los datos y actualiza la base de datos
+    for ($i = 0; $i < $limite; $i++) {
+        $id = $data[$i]['id'];
+        $cantidad = $data[$i]['cantidad'];
+
+        // Realiza la consulta SQL para actualizar la cantidad de insumos restantes
+        $query_update_products = "UPDATE almacen SET stock = $cantidad WHERE id_producto = $id";
+        $result_update_products = mysqli_query($conn, $query_update_products);       
+    }
+
+    // Verifica si las actualizaciones fueron exitosas
+    if ($result_update_products) echo "Insumos registrados!";
+}
+
 if (isset($_POST['guardar_formula'])) {
     $data = json_decode($_POST['productos'], true); // Recibe los datos JSON del frontend
 
@@ -63,7 +89,7 @@ if (isset($_POST['guardar_formula'])) {
         }
 
         // Verifica si las inserciones fueron exitosas
-        if ($result_insert_formula) echo "Transaccion exitosa!";
+        if ($result_insert_formula) echo "Transacción exitosa!";
 
         // Confirmar transacción
         mysqli_commit($conn);

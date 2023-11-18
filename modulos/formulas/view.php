@@ -11,6 +11,7 @@
                     <tr>
                       <th>#</th>
                       <th>Alimento fabricado</th>
+                      <th>En almácen</th>
                       <th>Opciones</th>
                     </tr>
                   </thead>
@@ -35,40 +36,33 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLiveLabel">Nota de compra: <span class="text-right" id="nota_compra"></span></h5>
+            <h5 class="modal-title" id="exampleModalLiveLabel">Agregar insumo<span class="text-right" id="nombre_insumo"></span></h5>
             <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body row">
-            <div class="col-md-6">
-              <span>Fecha de compra</span>
-              <p id="fecha_compra"></p>
-            </div>
-            <div class="col-md-6">
-              <span>Proveedor</span>
-              <p id="nombre_proveedor"></p>
-            </div>
-            <div class="col-md-6">
-              <span>Responsable</span>
-              <p id="responsable"></p>
-            </div>
-            <div class="col-md-6">
-              <span>Descripción</span>
-              <p id="descripcion_compra"></p>
-            </div>
-            <div class='col-md-12' style="overflow-x: auto;">
-              <table class="table table-sm table-bordered border">
+            <div class='col-md-12 mb-2' style="overflow-x: auto;">
+              <span>Fórmula preparación</span>
+              <table class="table table-xs table-bordered border">
                 <thead>
                   <tr>
                     <th>Producto</th>
-                    <th>Cant.</th>
-                    <th>Precio U.</th>
-                    <th>Subtotal</th>
+                    <th>En almácen</th>
+                    <th>Cant. Fórmula</th>
                   </tr>
                 </thead>
                 <tbody id="lista_productos">
                   <!-- Se rellena dinámicamente -->
                 </tbody>
               </table>
+            </div>
+            <div class="col-md-12 mb-2">
+              <label for="cantidad_fabricacion">Cantidad preparación</label>
+              <input type="number" class="form-control" id="cantidad_fabricacion" name="cantidad_fabricacion">
+            </div>
+            <div class="container-fluid">
+              <div class='text-center my-3 float-center'>
+                <button type='submit' class='btn btn-md btn-outline-primary' id="btn-prepare" data-dismiss='modal'>Continuar</button>
+              </div>
             </div>
           </div>
         </div>
@@ -97,7 +91,7 @@
                     </div>
                     <div class="card-body table-border-style" style="max-height: 40vh !important; overflow-y: auto;">
                       <div class="table-responsive">
-                        <table class="table table-striped table-sm">
+                        <table class="table table-striped table-xs">
                           <thead id="tbl-header">
                             <tr>
                               <th>Prod. Primario</th>
@@ -112,9 +106,9 @@
                         </table>
                       </div>
                     </div>
-                    <div class="container-fluid border d-flex text-right">
-                      <div class='text-center my-3'>
-                        <button type='submit' class='btn btn-sm btn-outline-success' id="btn-save" data-dismiss='modal'>Guardar</button>
+                    <div class="container-fluid">
+                      <div class='text-center mb-3 float-center'>
+                        <button type='submit' class='btn btn-md btn-outline-success' id="btn-save" data-dismiss='modal'>Guardar</button>
                       </div>
                     </div>
                   </div>

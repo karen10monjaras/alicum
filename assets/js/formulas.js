@@ -39,6 +39,7 @@ $(document).ready(function () {
     columns: [
       { data: "id_producto" },
       { data: "nombre_producto" },
+      { data: "stock" },
       {
         data: "id_producto",
         render: function (data, type) {
@@ -74,6 +75,158 @@ $(document).ready(function () {
         previous: "Anterior",
       },
     },
+  });
+
+  // Funcion para limpiar el formulario
+  function resetForm() {
+    $("#key").val("");
+    $("#tbl-productos").empty();
+    $("#cantidad_fabricacion").val("");
+    $("#lista_productos").empty();
+    id_productos_primarios = [];
+  }
+
+  // Agregamos los productos a la tabla tbl-productos
+  $(document).on("click", ".btn-add", function () {
+    id_producto = $(this).attr("id");
+    $("#lista_productos").empty();
+
+    $.ajax({
+      url: "modulos/formulas/model.php",
+      method: "POST",
+      data: {
+        edit_id: id_producto,
+      },
+      success: function (response) {
+        let data = JSON.parse(response);
+        if (data.length == 0) return;
+
+        // Iterar sobre los datos y agregar filas a la tabla
+        $.each(data, function (index, item) {
+          $.each(item.extra, function (extraIndex, extraItem) {
+            var template = `
+              <tr data-id="${item.id_producto}">
+                <td>${extraItem.nombre_producto}</td>
+                <td class='text-center' old_stock='${extraItem.stock}'>${extraItem.stock}</td>
+                <td class='text-center cant-formula'>${item.cantidad_producto}</td>
+              </tr>`;
+            $("#lista_productos").append(template);
+          });
+        });
+      },
+    });
+  });
+
+  function refrescarExistencias() {
+    cantidad = parseInt($("#cantidad_fabricacion").val());
+
+    if (cantidad <= 0) $("#cantidad_fabricacion").val("1");
+    if (isNaN(cantidad)) cantidad = 0;
+
+    $("#lista_productos tr").each(function () {
+      var cant_formula = parseInt($(this).find("td:eq(2)").text()); 
+      var stockCell = $(this).find("td:eq(1)");
+      var old_stock = parseInt(stockCell.attr("old_stock"));
+      var stock = parseInt(stockCell.text());
+
+      // Asegurarse de que el stock original esté guardado en la primera iteración
+      if (isNaN(old_stock)) {
+        stockCell.attr("old_stock", stock);
+        old_stock = stock;
+      }
+
+      // var nuevo_stock = old_stock - cantidad;
+      var nuevo_stock = old_stock - (cantidad * cant_formula);
+
+      // Si el stock supera el limite de existencias, mostrar un mensaje de error
+      if (nuevo_stock < 0) {
+        nuevo_stock = 0;
+        $("#cantidad_fabricacion").val(parseInt(old_stock / cant_formula));
+        refrescarExistencias();
+      }
+
+      // Actualizar el stock visualmente en la tabla
+      stockCell.text(nuevo_stock);
+    });
+  }
+
+  $(document).on("change input keyup", "#cantidad_fabricacion", refrescarExistencias);
+
+  // Guardar la preparación de alimento en el server
+  $("#btn-prepare").click(function () {
+    var dataToSend = [];
+
+    $("#lista_productos tr").each(function () {
+      var id = $(this).data("id");
+      var cantidad = parseFloat($(this).find('td:eq(1)').text());
+      dataToSend.push({ id: id, cantidad: cantidad });
+    });
+
+    dataToSend.push({ id_producto: id_producto });
+    dataToSend.push({ cantidad_generada: $("#cantidad_fabricacion").val() });
+
+    // Enviar los datos al servidor como un objeto JSON
+    $.ajax({
+      type: "POST",
+      url: "modulos/formulas/model.php",
+      data: {
+        preparar_alimento : true,
+        productos: JSON.stringify(dataToSend),
+      },
+      success: function (response) {
+        Swal.fire({
+          icon: "success",
+          title: "Insumos registrados",
+          showConfirmButton: false,
+          timer: 700,
+        });
+      },
+      complete: function () {
+        table.ajax.reload();
+        resetForm();
+      },
+    });
+  });
+
+  // Agregamos los productos a la tabla tbl-productos
+  $(document).on("click", ".btn-edit", function () {
+    id_producto = $(this).attr("id");
+    $("#tbl-productos").empty();
+
+    $.ajax({
+      url: "modulos/formulas/model.php",
+      method: "POST",
+      data: {
+        edit_id: id_producto,
+      },
+      success: function (response) {
+        // console.log(response); return;
+        let data = JSON.parse(response);
+        if (data.length == 0) return;
+
+        // Iterar sobre los datos y agregar filas a la tabla
+        $.each(data, function (index, item) {
+          $.each(item.extra, function (extraIndex, extraItem) {
+            var template = `
+              <tr data-id="${item.id_producto}">
+                <td>${extraItem.nombre_producto}</td>
+                <td old_stock='${extraItem.stock}'>${extraItem.stock}</td>
+                <td>
+                  <div class="form-outline">
+                    <input type="number" class="form-control" value="${item.cantidad_producto}"/>
+                  </div>
+                </td>
+                <td>
+                  <button id="${item.id_producto}" class="btn btn-sm btn-outline-danger delete-product" data-id="${item.id_producto}">
+                    <i class="fa fas fa-trash"></i>
+                  </button>
+                </td>
+              </tr>`;
+            $("#tbl-productos").append(template);
+          });
+        });
+      },
+    });
   });
 
   id_productos_primarios = [];
@@ -127,10 +280,6 @@ $(document).ready(function () {
     });
   });
 
-  // Actualizar total a pagar cuando se modifica la cantidad de producto
-  $("#tbl-productos").on("keyup", "input[type='number']", refrescarStock);
-  $("#tbl-productos").on("change", "input[type='number']", refrescarStock);
-
   // Manejador de eventos para eliminar productos
   $("#tbl-productos").on("click", ".delete-product", function () {
     var id = $(this).data("id");
@@ -167,12 +316,6 @@ $(document).ready(function () {
 
       // Si el stock supera el limite de existencias, mostrar un mensaje de error
       if (nuevo_stock < 0) {
-        Swal.fire({
-          icon: "error",
-          title: "No hay suficientes existencias",
-          showConfirmButton: false,
-          timer: 1500,
-        });
         nuevo_stock = 0;
         $(this).find('input[type="number"]').val(old_stock);
       }
@@ -181,6 +324,10 @@ $(document).ready(function () {
       stockCell.text(nuevo_stock);
     });
   }
+
+   // Actualizar total a pagar cuando se modifica la cantidad de producto
+   $("#tbl-productos").on("keyup", "input[type='number']", refrescarStock);
+   $("#tbl-productos").on("change", "input[type='number']", refrescarStock);
 
   $("#tbl-productos tr").on("change", 'input[type="number"]', function () {
     var cantidad = parseInt($(this).val());
@@ -191,53 +338,6 @@ $(document).ready(function () {
       // Restaurar el stock original visualmente si la cantidad se reduce
       stockCell.text(old_stock - cantidad);
     }
-  });
-
-  // Funcion para limpiar el formulario
-  function resetForm() {
-    $("#key").val("");
-    $("#tbl-productos").empty();
-    id_productos_primarios = [];
-  }
-
-  $(document).on("click", ".btn-edit", function () {
-    id_producto = $(this).attr("id");
-    $("#tbl-productos").empty();
-
-    $.ajax({
-      url: "modulos/formulas/model.php",
-      method: "POST",
-      data: {
-        edit_id: id_producto,
-      },
-      success: function (response) {
-        // console.log(response); return;
-        let data = JSON.parse(response);
-        if (data.length == 0) return;
-
-        // Iterar sobre los datos y agregar filas a la tabla
-        $.each(data, function(index, item) {
-          $.each(item.extra, function(extraIndex, extraItem) {
-            var template = `
-              <tr data-id="${item.id_producto}">
-                <td>${extraItem.nombre_producto}</td>
-                <td old_stock='${extraItem.stock}'>${extraItem.stock}</td>
-                <td>
-                  <div class="form-outline">
-                    <input type="number" class="form-control" value="${item.cantidad_producto}"/>
-                  </div>
-                </td>
-                <td>
-                  <button id="${item.id_producto}" class="btn btn-sm btn-outline-danger delete-product" data-id="${item.id_producto}">
-                    <i class="fa fas fa-trash"></i>
-                  </button>
-                </td>
-              </tr>`;
-            $("#tbl-productos").append(template);
-          });
-        });
-      },
-    });
   });
 
   // Enviar los datos al servidor cuando se hace click en el boton de vender
@@ -264,7 +364,7 @@ $(document).ready(function () {
         // console.log(response)
         Swal.fire({
           icon: "success",
-          title: "Formula actualizada",
+          title: "Fórmula actualizada",
           showConfirmButton: false,
           timer: 1500,
         });
