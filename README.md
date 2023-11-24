@@ -7,6 +7,7 @@ Cambios:
 1. Ya se puede aumentar el stock de productos (alimentos elaborados) desde la sección de fórmulas.
 
 2. En la sección de compras se exluyen los alimentos preparados porque se asume que esos son elaborados localmente (no provienen directamente de un proveedor).
+3. OKI APENAS ANDO BIENDO COMO SE ESCRIBE AQUI JEJEJE
 
 ---
 
