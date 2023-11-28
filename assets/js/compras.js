@@ -117,8 +117,10 @@ $(document).ready(function() {
             var precio = parseFloat($(this).find('.precio').val());
             
             if (cantidad <= 0) $(this).find('.cantidad').val("1");
+            if (precio <= 0) $(this).find('.precio').val("1");
             
             if (isNaN(cantidad)) cantidad = 0;
+            if (isNaN(precio)) precio = 0;
 
             var subtotal = cantidad * precio;
             total += subtotal;

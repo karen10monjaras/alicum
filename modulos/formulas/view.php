@@ -58,6 +58,7 @@
             <div class="col-md-12 mb-2">
               <label for="cantidad_fabricacion">Cantidad preparación</label>
               <input type="number" class="form-control" id="cantidad_fabricacion" name="cantidad_fabricacion">
+              <p class="text-danger text-center mt-2 mb-0" id="err" hidden>Primero defina una fórmula</p>
             </div>
             <div class="container-fluid">
               <div class='text-center my-3 float-center'>

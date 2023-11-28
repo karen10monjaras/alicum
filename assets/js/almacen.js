@@ -106,6 +106,26 @@ $(document).ready(function () {
     e.preventDefault();
   });
 
+  // Funcion para habilitar boton de registro
+  function validarForm() {
+    var form_completo = true;
+
+    $("#nombre_producto, #precio_producto, #categoria_producto").each(function () {
+      if ($(this).val() === "") {
+        form_completo = false;
+        return false;
+      }
+    });
+
+    $(".btn-continue").attr("disabled", !form_completo);
+  }
+
+  $("form").on("keyup change", "input, select", function () {
+    validarForm();
+  });
+
+  validarForm();
+
   // Reiniciar formulario
   function resetForm() {
     $("#id_producto").val("");
@@ -161,6 +181,8 @@ $(document).ready(function () {
         $("#precio_producto").val(data[0].precio_producto);
         $("#categoria_producto").val(data[0].categoria_producto);
         $(".btn-continue").attr("act", "actualizar");
+
+        validarForm();
       },
     });
   });

@@ -114,20 +114,33 @@ $(document).ready(function () {
           });
         });
       },
+      complete: function () {
+        refrescarExistencias();
+      }
     });
   });
 
   function refrescarExistencias() {
     cantidad = parseInt($("#cantidad_fabricacion").val());
 
-    if (cantidad <= 0) $("#cantidad_fabricacion").val("1");
+    // Ternario para habilitar o deshabilitar el boton de preparar
+    $("#btn-prepare").attr("disabled", cantidad >= 1 ? false : true);
+
+    // habilitar o deshabilitar el boton de preparar si hay formula
+    $("#err").attr("hidden", $("#lista_productos tr").length == 0 ? false : true);
+    $("#cantidad_fabricacion").attr("disabled", $("#lista_productos tr").length == 0 ? true : false);
+
+    if (cantidad <= 0) $("#cantidad_fabricacion").val("");
     if (isNaN(cantidad)) cantidad = 0;
 
     $("#lista_productos tr").each(function () {
-      var cant_formula = parseInt($(this).find("td:eq(2)").text()); 
+      var cant_formula = parseInt($(this).find("td:eq(2)").text());
       var stockCell = $(this).find("td:eq(1)");
       var old_stock = parseInt(stockCell.attr("old_stock"));
       var stock = parseInt(stockCell.text());
+
+      // Ternario para cambiar el color de la celda de stock
+      stockCell.toggleClass("text-danger", stock <= 10);
 
       // Asegurarse de que el stock original esté guardado en la primera iteración
       if (isNaN(old_stock)) {
@@ -135,8 +148,8 @@ $(document).ready(function () {
         old_stock = stock;
       }
 
-      // var nuevo_stock = old_stock - cantidad;
-      var nuevo_stock = old_stock - (cantidad * cant_formula);
+      // Obtener el nuevo stock
+      var nuevo_stock = old_stock - cantidad * cant_formula;
 
       // Si el stock supera el limite de existencias, mostrar un mensaje de error
       if (nuevo_stock < 0) {
@@ -150,7 +163,11 @@ $(document).ready(function () {
     });
   }
 
-  $(document).on("change input keyup", "#cantidad_fabricacion", refrescarExistencias);
+  $(document).on(
+    "change input keyup",
+    "#cantidad_fabricacion",
+    refrescarExistencias
+  );
 
   // Guardar la preparación de alimento en el server
   $("#btn-prepare").click(function () {
@@ -158,7 +175,7 @@ $(document).ready(function () {
 
     $("#lista_productos tr").each(function () {
       var id = $(this).data("id");
-      var cantidad = parseFloat($(this).find('td:eq(1)').text());
+      var cantidad = parseFloat($(this).find("td:eq(1)").text());
       dataToSend.push({ id: id, cantidad: cantidad });
     });
 
@@ -170,7 +187,7 @@ $(document).ready(function () {
       type: "POST",
       url: "modulos/formulas/model.php",
       data: {
-        preparar_alimento : true,
+        preparar_alimento: true,
         productos: JSON.stringify(dataToSend),
       },
       success: function (response) {
@@ -187,6 +204,8 @@ $(document).ready(function () {
       },
     });
   });
+
+  // -----------------------------------------------------------
 
   // Agregamos los productos a la tabla tbl-productos
   $(document).on("click", ".btn-edit", function () {
@@ -226,6 +245,9 @@ $(document).ready(function () {
           });
         });
       },
+      complete: function () {
+        refrescarStock();
+      }
     });
   });
 
@@ -276,7 +298,7 @@ $(document).ready(function () {
           $("#key").val("");
           return false;
         });
-      },
+      }
     });
   });
 
@@ -315,19 +337,16 @@ $(document).ready(function () {
       var nuevo_stock = old_stock - cantidad;
 
       // Si el stock supera el limite de existencias, mostrar un mensaje de error
-      if (nuevo_stock < 0) {
-        nuevo_stock = 0;
-        $(this).find('input[type="number"]').val(old_stock);
-      }
+      if (nuevo_stock < 0) nuevo_stock = 0;
 
       // Actualizar el stock visualmente en la tabla
       stockCell.text(nuevo_stock);
     });
   }
 
-   // Actualizar total a pagar cuando se modifica la cantidad de producto
-   $("#tbl-productos").on("keyup", "input[type='number']", refrescarStock);
-   $("#tbl-productos").on("change", "input[type='number']", refrescarStock);
+  // Actualizar total a pagar cuando se modifica la cantidad de producto
+  $("#tbl-productos").on("keyup", "input[type='number']", refrescarStock);
+  $("#tbl-productos").on("change", "input[type='number']", refrescarStock);
 
   $("#tbl-productos tr").on("change", 'input[type="number"]', function () {
     var cantidad = parseInt($(this).val());

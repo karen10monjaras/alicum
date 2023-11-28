@@ -1,5 +1,19 @@
 # **CHANGELOG**
 
+**Actualización 28/11/2023**
+
+Cambios:
+
+1. Ahora se tienen que rellenar los formularios para el envio de datos
+
+2. Se arreglaron errores en la sección de fórmulas
+
+3. Ahora se requiere dar de alta la fórmula primero para poder agregar el insumo (alimento fabricado) 
+
+#### Una disculpa si demore mucho, tuve unos pendientes por resolver.
+
+---
+
 **Actualización 18/11/2023**
 
 Cambios:
