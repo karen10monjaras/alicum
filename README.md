@@ -11,6 +11,7 @@ Cambios:
 3. Ahora se requiere dar de alta la fórmula primero para poder agregar el insumo (alimento fabricado) 
 
 #### Una disculpa si demore mucho, tuve unos pendientes por resolver.
+_-----No nada de eso gracias a ti por tu tiempo y ayudarme🫰🏻 artur...🫶🏻
 
 ---
 
